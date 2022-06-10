@@ -1,0 +1,143 @@
+{
+  "owner": [
+    {
+      "id": 1,
+      "lastName": "Alexandre",
+      "firstName": "Gavriilidis",
+      "email": "jeanBon@beurre.com",
+      "birthDate": "1995-11-21",
+      "passwd": "Test1234=",
+      "score": null
+    }
+  ],
+  "pet": [
+    {
+      "ID": 1,
+      "ID_Owner": 1,
+      "NickName": "Loulou",
+      "Type": "Chien",
+      "Breed": "Batard",
+      "BirthDate": "2014-06-15 00:00:00.0000000"
+    },
+    {
+      "ID": 3,
+      "ID_Owner": 1,
+      "NickName": "Padme",
+      "Type": "Chat",
+      "Breed": "British Shorthair",
+      "BirthDate": "2020-06-13 00:00:00.0000000"
+    },
+    {
+      "ID": 4,
+      "ID_Owner": 1,
+      "NickName": "Bugs",
+      "Type": "Lapin",
+      "Breed": "Nain",
+      "BirthDate": "2012-09-09 00:00:00.0000000"
+    },
+    {
+      "ID": 5,
+      "ID_Owner": 4,
+      "NickName": "Filou",
+      "Type": "Chat",
+      "Breed": "Bleu Russe",
+      "BirthDate": "2020-06-13 00:00:00.0000000"
+    }
+  ],
+  "petSitter": [
+    {
+      "ID": 1,
+      "FirstName": "Van Haver",
+      "LastName": "Paul",
+      "BirthDate": "1985-03-12 00:00:00.0000000",
+      "Email": "alorson@danse.com",
+      "Passwd": "Stromae12*!",
+      "Score": 5,
+      "PetPreference": "Chien"
+    },
+    {
+      "ID": 2,
+      "FirstName": "Marley",
+      "LastName": "Bob",
+      "BirthDate": "1945-02-06 00:00:00.0000000",
+      "Email": "onelove@yahoo.com",
+      "Passwd": "OneLove1234=*",
+      "Score": 4,
+      "PetPreference": "Lapin"
+    }
+  ],
+  "prestation": [
+    {
+      "ID": 2,
+      "ID_PetSitter": 1,
+      "DateStart": "2022-05-12 00:00:00.0000000",
+      "DateEnd": "2022-05-22 00:00:00.0000000"
+    },
+    {
+      "ID": 11,
+      "ID_PetSitter": 2,
+      "DateStart": "2022-05-16 00:00:00.0000000",
+      "DateEnd": "2022-05-21 00:00:00.0000000"
+    },
+    {
+      "ID": 12,
+      "ID_PetSitter": 2,
+      "DateStart": "2022-06-08 00:00:00.0000000",
+      "DateEnd": "2022-06-14 00:00:00.0000000"
+    },
+    {
+      "ID": 13,
+      "ID_PetSitter": 1,
+      "DateStart": "2022-06-13 00:00:00.0000000",
+      "DateEnd": "2022-06-17 00:00:00.0000000"
+    }
+  ],
+  "advertisement": [
+    {
+      "ID": 2,
+      "ID_PetSitter": 1,
+      "DateStart": "2022-05-12 00:00:00.0000000",
+      "DateEnd": "2022-05-22 00:00:00.0000000"
+    },
+    {
+      "ID": 11,
+      "ID_PetSitter": 2,
+      "DateStart": "2022-05-16 00:00:00.0000000",
+      "DateEnd": "2022-05-21 00:00:00.0000000"
+    },
+    {
+      "ID": 12,
+      "ID_PetSitter": 2,
+      "DateStart": "2022-06-08 00:00:00.0000000",
+      "DateEnd": "2022-06-14 00:00:00.0000000"
+    },
+    {
+      "ID": 13,
+      "ID_PetSitter": 1,
+      "DateStart": "2022-06-13 00:00:00.0000000",
+      "DateEnd": "2022-06-17 00:00:00.0000000"
+    }
+  ],
+  "comment": [
+    {
+      "ID": 9,
+      "ID_Prestation": 2,
+      "ID_Owner": 1,
+      "ID_PetSitter": 1,
+      "Title": "Titre modifié via Update",
+      "Description": "La description a changé aussi hehe",
+      "CreatedAt": "2022-05-13 13:56:44.9800000",
+      "Score": 5
+    },
+    {
+      "ID": 10,
+      "ID_Prestation": 11,
+      "ID_Owner": 3,
+      "ID_PetSitter": 2,
+      "Title": "Génial",
+      "Description": "Description d'un commentaire test",
+      "CreatedAt": "2022-05-13 13:56:44.9800000",
+      "Score": 4
+    }
+  ]
+}

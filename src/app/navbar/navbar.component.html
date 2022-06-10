@@ -1,0 +1,47 @@
+<nav class="navbar navbar-expand-lg navbar-light light-dark border">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="{{ menu[0].url }}">{{
+      menu[0].name
+    }}</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarToggler"
+      aria-controls="navbarToggler"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarToggler">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item" *ngFor="let link of menu; let i = index">
+          <a
+            *ngIf="link.name != 'PetSitting' && i < 4"
+            routerLink="{{ link.url }}"
+            class="nav-link"
+            >{{ link.name }}</a
+          >
+          <a
+            *ngIf="i == 4"
+            class="btn btn-outline-danger m-1"
+            routerLink="{{ link.url }}"
+            >{{ link.name }}</a
+          >
+          <!-- Trigger modal -->
+          <a
+            class="btn btn-outline-danger m-1"
+            *ngIf="i == 5"
+            data-bs-toggle="modal"
+            data-bs-target="#signupModal"
+          >
+            {{ link.name }}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- Modal -->
+<app-modal></app-modal>

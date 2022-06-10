@@ -1,0 +1,48 @@
+<form
+  [formGroup]="loginForm"
+  class="w-25 m-auto my-5"
+  (ngSubmit)="SubmitForm()"
+>
+  <div class="text-center">
+    <h2>Veuillez-vous connecter</h2>
+    <div class="form-floating">
+      <input
+        id="userEmail"
+        class="form-control my-4"
+        type="email"
+        placeholder="nom@mail.com"
+        formControlName="userEmail"
+      />
+      <p
+        class="text-danger"
+        *ngIf="
+          !loginForm.get('userEmail')?.touched &&
+          loginForm.get('userEmail')?.errors?.['required']
+        "
+      >
+        L'email fournit est invalide🤔
+      </p>
+      <label for="userEmail">E-mail</label>
+    </div>
+    <div class="form-floating">
+      <input
+        id="userPwd"
+        class="form-control my-4"
+        type="password"
+        placeholder="Mot de passe"
+        formControlName="userPwd"
+      />
+      <p
+        class="text-danger"
+        *ngIf="
+        !loginForm.get('userPwd')?.touched &&
+        loginForm.get('userPwd')?.errors?.['required']
+      "
+      >
+        Le mot de passe fournit est invalide🤔
+      </p>
+      <label for="userPwd">Mot de passe</label>
+    </div>
+    <a routerLink="/" class="w-100 btn btn-lg btn-primary">Connection</a>
+  </div>
+</form>

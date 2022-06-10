@@ -1,0 +1,45 @@
+.col-owner {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.col-sitter {
+  background-color: #fff;
+  color: #dc3545;
+}
+
+.col-owner h2,
+.col-sitter h2 {
+  line-height: 1.11111;
+  font-weight: 600;
+  font-size: 3.5rem;
+  margin-bottom: 48px;
+}
+
+.col-owner p,
+.col-sitter p {
+  font-size: 1.5rem;
+  margin-bottom: 32px;
+  padding: 0px;
+  margin-top: 16px;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+.btn-close {
+  padding: 24px;
+}
+
+.btn-light {
+  padding: 0.4rem;
+  margin-bottom: 0.8rem;
+  background-color: transparent;
+  color: #fff;
+}
+
+.btn-danger {
+  padding: 0.4rem;
+  margin-bottom: 0.8rem;
+  background-color: transparent;
+  color: #dc3545;
+}

@@ -1,0 +1,179 @@
+<div
+  class="modal fade"
+  id="ownerSignupModal"
+  aria-hidden="true"
+  aria-labelledby="ownerSignupModal"
+  tabindex="-1"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="ownerSignupModal">Devenez membre</h2>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p>
+          Enregistrez-vous et créer un compte pour trouver le parfait
+          pet-sitter✨.
+        </p>
+        <form [formGroup]="ownerForm" (ngSubmit)="onSubmit()">
+          <div class="mb-3">
+            <label for="ownerLastName" class="form-label">Nom de famille</label>
+            <input
+              type="text"
+              class="form-control"
+              id="ownerLastName"
+              formControlName="ownerLastName"
+              pattern="[a-zA-Z]+[\s|-]?[a-zA-Z]+[\s|-]?[a-zA-Z]+$"
+              placeholder="Doe"
+              [required]="true"
+            />
+            <div
+              class="text-danger"
+              *ngIf="ownerForm.get('ownerLastName')?.errors?.['pattern']"
+            >
+              <i class="fa fa-times-circle"></i>Le nom fournit est invalide.
+            </div>
+            <div
+              class="text-danger"
+              *ngIf="ownerForm.get('ownerLastName')?.errors?.['required'] && ownerForm.get('ownerLastName')?.touched"
+            >
+              <i class="fa fa-times-circle"></i>Veuillez remplir le champ nom.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="ownerFirstName" class="form-label">Prénom</label>
+            <input
+              type="text"
+              class="form-control"
+              id="ownerFirstName"
+              formControlName="ownerFirstName"
+              pattern="[a-zA-Z]+[\s|-]?[a-zA-Z]+[\s|-]?[a-zA-Z]+$"
+              placeholder="John"
+              [required]="true"
+            />
+          </div>
+          <div
+            class="text-danger"
+            *ngIf="ownerForm.get('ownerFirstName')?.errors?.['pattern']"
+          >
+            <i class="fa fa-times-circle"></i>Le prénom fournit est invalide.
+          </div>
+          <div
+            class="text-danger"
+            *ngIf="ownerForm.get('ownerFirstName')?.errors?.['required'] && ownerForm.get('ownerFirstName')?.touched"
+          >
+            <i class="fa fa-times-circle"></i>Veuillez remplir le champ prénom.
+          </div>
+          <div class="mb-3">
+            <label for="ownerBirthDate" class="form-label"
+              >Date de naissance</label
+            >
+            <input
+              type="date"
+              class="form-control"
+              id="ownerBirthDate"
+              formControlName="ownerBirthDate"
+              [required]="true"
+            />
+            <div
+              class="text-danger"
+              *ngIf="
+                ownerForm.get('ownerBirthDate')?.invalid &&
+                ownerForm.get('ownerBirthDate')?.touched
+              "
+            >
+              <i class="fa fa-times-circle"></i>Vous devez être majeur pour vous
+              inscrire.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="ownerEmail" class="form-label">Email</label>
+            <input
+              type="email"
+              class="form-control"
+              id="ownerEmail"
+              placeholder="johnDoe@email.com"
+              [required]="true"
+              formControlName="ownerEmail"
+            />
+            <div
+              class="text-danger"
+              *ngIf="ownerForm.get('ownerEmail')?.touched && ownerForm.get('ownerEmail')?.errors?.['required']"
+            >
+              <i class="fa fa-times-circle"></i>Veuillez fournir un email
+            </div>
+            <div
+              class="text-danger"
+              *ngIf="
+              ownerForm.get('ownerEmail')?.errors?.['pattern']
+              "
+            >
+              <i class="fa fa-times-circle"></i>L'email fournit est invalide
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="ownerPasswd" class="form-label">Mot de passe</label>
+            <input
+              type="password"
+              class="form-control"
+              id="ownerPasswd"
+              [required]="true"
+              formControlName="ownerPasswd"
+            />
+            <div
+              class="text-danger"
+              *ngIf="
+                ownerForm.get('ownerPasswd')?.errors?.['required'] &&
+                ownerForm.get('ownerPasswd')?.touched
+              "
+            >
+              <i class="fa fa-times-circle"></i>Veuillez fournir un mot de
+              passe.
+            </div>
+            <div
+              class="text-danger"
+              *ngIf="
+                ownerForm.get('ownerPasswd')?.invalid &&
+                ownerForm.get('ownerPasswd')?.touched
+              "
+            >
+              <i class="fa fa-times-circle"></i>Le mot de passe doit contenir au
+              moins 1 chiffre, 1 caractère spéciale, 1 majuscule, 1 minuscule,
+              et doit être compris entre 8 et 15 caractères.
+            </div>
+          </div>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="!ownerForm.valid"
+          >
+            Créer mon compte
+          </button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          class="btn btn-primary"
+          data-bs-target="#signupModal"
+          data-bs-toggle="modal"
+        >
+          Retour
+        </button>
+      </div>
+      <div *ngIf="displaySpinner" class="d-flex align-items-center m-3">
+        <strong>Chargement...</strong>
+        <div
+          class="spinner-border ms-auto"
+          role="status"
+          aria-hidden="true"
+        ></div>
+      </div>
+    </div>
+  </div>
+</div>

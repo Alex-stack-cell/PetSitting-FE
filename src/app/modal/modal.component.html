@@ -1,0 +1,53 @@
+<!-- Modal Principale-->
+<div
+  class="modal fade"
+  id="signupModal"
+  tabindex="-1"
+  aria-labelledby="signupModal"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col col-owner">
+            <h2>Propriétaire ?</h2>
+            <p>
+              Pour les propriétaires d'animaux de compagnie à la recherche d'un
+              service de gardiennage
+            </p>
+            <button
+              class="btn btn-light"
+              data-bs-target="#ownerSignupModal"
+              data-bs-toggle="modal"
+            >
+              Inscription en tant que propriétaire
+              <i class="fa fa-chevron-right"></i>
+            </button>
+          </div>
+          <div class="col col-sitter">
+            <h2>Pet-Sitter ?</h2>
+            <p>Pour les pet-sitters à la recherche d'animaux de compagnie</p>
+            <button
+              class="btn btn-danger"
+              data-bs-target="#sitterSignupModal"
+              data-bs-toggle="modal"
+            >
+              Inscription en tant que pet-sitter
+              <i class="fa fa-chevron-right"></i>
+            </button>
+          </div>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modale - Propriétaire -->
+<app-modal-owner></app-modal-owner>
+<!-- Modale - Pet-Sitter -->
