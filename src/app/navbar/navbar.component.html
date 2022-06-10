@@ -38,6 +38,12 @@
           >
             {{ link.name }}
           </a>
+          <a
+            *ngIf="i == 6 && auth.isAuthenticated()"
+            class="btn btn-secondary m-1"
+            (click)="logout()"
+            >{{ link.name }}</a
+          >
         </li>
       </ul>
     </div>

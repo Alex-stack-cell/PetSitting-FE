@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import {
   FormsModule,
   FormBuilder,
@@ -8,6 +7,11 @@ import {
   Validators,
 } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { Owner } from '../Models/owner';
+import { Router } from '@angular/router';
+import { AuthService } from '../services/auth-service.service';
+import { UserLogin } from '../Models/userLogin';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -16,9 +20,14 @@ import { Observable } from 'rxjs';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  private _urlOwner: string = 'http://localhost:3000/owner';
+  userLogin: UserLogin = new UserLogin('', '');
+  owner?: Owner;
 
-  constructor(private _formBuilder: FormBuilder /*private _http: HttpClient*/) {
+  constructor(
+    private _formBuilder: FormBuilder,
+    private _authService: AuthService,
+    private _router: Router
+  ) {
     this.loginForm = this._formBuilder.group({
       userEmail: [null, Validators.required],
       userPwd: [null, Validators.required],
@@ -27,5 +36,40 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  SubmitForm() {}
+  login(): void {
+    if (this.loginForm.invalid) {
+      alert('Veuillez remplir le formulaire, svp.');
+    }
+    const values = this.loginForm.value;
+
+    if (values.userEmail && values.userPwd) {
+      this.userLogin.email = values.userEmail;
+      this.userLogin.passwd = values.userPwd;
+      this._authService.login(this.userLogin).subscribe({
+        next: () => {
+          setTimeout(() => {
+            this.showSuccessAlert();
+            this._router.navigateByUrl('/');
+          }, 3000);
+        },
+        error: () => {
+          setTimeout(() => this.errorAlertBox(), 3000);
+          console.error('Utilisateur non connecté');
+        },
+      });
+    }
+    this.loginForm.reset;
+  }
+
+  showSuccessAlert(): void {
+    Swal.fire(
+      'Bienvenue',
+      'Vous êtes connecté ' + this._authService.getUserName() + ' 🥳',
+      'success'
+    );
+  }
+
+  errorAlertBox() {
+    Swal.fire('Oops', 'Une erreur est survenue 💥', 'error');
+  }
 }

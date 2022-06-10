@@ -11,6 +11,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ModalComponent } from './modal/modal.component';
 import { ModalOwnerComponent } from './modal/modal-owner/modal-owner.component';
+import { SharedModule } from './shared/shared.module';
+import { ModalPetSitterComponent } from './modal/modal-pet-sitter/modal-pet-sitter.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,7 @@ import { ModalOwnerComponent } from './modal/modal-owner/modal-owner.component';
     LoginComponent,
     ModalComponent,
     ModalOwnerComponent,
+    ModalPetSitterComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,6 +31,7 @@ import { ModalOwnerComponent } from './modal/modal-owner/modal-owner.component';
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
+    SharedModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

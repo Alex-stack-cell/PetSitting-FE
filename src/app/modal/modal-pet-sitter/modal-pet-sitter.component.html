@@ -1,15 +1,15 @@
-<!-- Modal Secondaire : dirigeant le propriétaire vers le formulaire d'inscription -->
+<!-- Modal Secondaire : dirigeant le pet-sitter vers le formulaire d'inscription -->
 <div
   class="modal fade"
-  id="ownerSignupModal"
+  id="sitterSignupModal"
   aria-hidden="true"
-  aria-labelledby="ownerSignupModal"
+  aria-labelledby="sitterSignupModal"
   tabindex="-1"
 >
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title" id="ownerSignupModal">Devenez membre</h2>
+        <h2 class="modal-title" id="sitterSignupModal">Devenez membre</h2>
         <button
           type="button"
           class="btn-close"
@@ -20,40 +20,42 @@
       <div class="modal-body">
         <p>
           Enregistrez-vous et créer un compte pour trouver le parfait
-          pet-sitter✨.
+          pet-sitting✨.
         </p>
-        <form [formGroup]="ownerForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="petSitterForm" (ngSubmit)="onSubmit()">
           <div class="mb-3">
-            <label for="ownerLastName" class="form-label">Nom de famille</label>
+            <label for="petSitterLastName" class="form-label"
+              >Nom de famille</label
+            >
             <input
               type="text"
               class="form-control"
-              id="ownerLastName"
-              formControlName="ownerLastName"
+              id="petSitterLastName"
+              formControlName="petSitterLastName"
               pattern="[a-zA-Z]+[\s|-]?[a-zA-Z]+[\s|-]?[a-zA-Z]+$"
               placeholder="Doe"
               [required]="true"
             />
             <div
               class="text-danger"
-              *ngIf="ownerForm.get('ownerLastName')?.errors?.['pattern']"
+              *ngIf="petSitterForm.get('petSitterLastName')?.errors?.['pattern']"
             >
               <i class="fa fa-times-circle"></i>Le nom fournit est invalide.
             </div>
             <div
               class="text-danger"
-              *ngIf="ownerForm.get('ownerLastName')?.errors?.['required'] && ownerForm.get('ownerLastName')?.touched"
+              *ngIf="petSitterForm.get('petSitterLastName')?.errors?.['required'] && petSitterForm.get('petSitterLastName')?.touched"
             >
               <i class="fa fa-times-circle"></i>Veuillez remplir le champ nom.
             </div>
           </div>
           <div class="mb-3">
-            <label for="ownerFirstName" class="form-label">Prénom</label>
+            <label for="petSitterFirstName" class="form-label">Prénom</label>
             <input
               type="text"
               class="form-control"
-              id="ownerFirstName"
-              formControlName="ownerFirstName"
+              id="petSitterFirstName"
+              formControlName="petSitterFirstName"
               pattern="[a-zA-Z]+[\s|-]?[a-zA-Z]+[\s|-]?[a-zA-Z]+$"
               placeholder="John"
               [required]="true"
@@ -61,32 +63,32 @@
           </div>
           <div
             class="text-danger"
-            *ngIf="ownerForm.get('ownerFirstName')?.errors?.['pattern']"
+            *ngIf="petSitterForm.get('petSitterFirstName')?.errors?.['pattern']"
           >
             <i class="fa fa-times-circle"></i>Le prénom fournit est invalide.
           </div>
           <div
             class="text-danger"
-            *ngIf="ownerForm.get('ownerFirstName')?.errors?.['required'] && ownerForm.get('ownerFirstName')?.touched"
+            *ngIf="petSitterForm.get('petSitterFirstName')?.errors?.['required'] && petSitterForm.get('petSitterFirstName')?.touched"
           >
             <i class="fa fa-times-circle"></i>Veuillez remplir le champ prénom.
           </div>
           <div class="mb-3">
-            <label for="ownerBirthDate" class="form-label"
+            <label for="petSitterBirthDate" class="form-label"
               >Date de naissance</label
             >
             <input
               type="date"
               class="form-control"
-              id="ownerBirthDate"
-              formControlName="ownerBirthDate"
+              id="petSitterBirthDate"
+              formControlName="petSitterBirthDate"
               [required]="true"
             />
             <div
               class="text-danger"
               *ngIf="
-                ownerForm.get('ownerBirthDate')?.invalid &&
-                ownerForm.get('ownerBirthDate')?.touched
+                petSitterForm.get('petSitterBirthDate')?.invalid &&
+                petSitterForm.get('petSitterBirthDate')?.touched
               "
             >
               <i class="fa fa-times-circle"></i>Vous devez être majeur pour vous
@@ -94,45 +96,45 @@
             </div>
           </div>
           <div class="mb-3">
-            <label for="ownerEmail" class="form-label">Email</label>
+            <label for="petSitterEmail" class="form-label">Email</label>
             <input
               type="email"
               class="form-control"
-              id="ownerEmail"
+              id="petSitterEmail"
               placeholder="johnDoe@email.com"
               [required]="true"
-              formControlName="ownerEmail"
+              formControlName="petSitterEmail"
             />
             <div
               class="text-danger"
-              *ngIf="ownerForm.get('ownerEmail')?.touched && ownerForm.get('ownerEmail')?.errors?.['required']"
+              *ngIf="petSitterForm.get('petSitterEmail')?.touched && petSitterForm.get('petSitterEmail')?.errors?.['required']"
             >
               <i class="fa fa-times-circle"></i>Veuillez fournir un email
             </div>
             <div
               class="text-danger"
               *ngIf="
-              ownerForm.get('ownerEmail')?.errors?.['pattern']
-              "
+                petSitterForm.get('petSitterEmail')?.errors?.['pattern']
+                "
             >
               <i class="fa fa-times-circle"></i>L'email fournit est invalide
             </div>
           </div>
           <div class="mb-3">
-            <label for="ownerPasswd" class="form-label">Mot de passe</label>
+            <label for="petSitterPasswd" class="form-label">Mot de passe</label>
             <input
               type="password"
               class="form-control"
-              id="ownerPasswd"
+              id="petSitterPasswd"
               [required]="true"
-              formControlName="ownerPasswd"
+              formControlName="petSitterPasswd"
             />
             <div
               class="text-danger"
               *ngIf="
-                ownerForm.get('ownerPasswd')?.errors?.['required'] &&
-                ownerForm.get('ownerPasswd')?.touched
-              "
+                  petSitterForm.get('petSitterPasswd')?.errors?.['required'] &&
+                  petSitterForm.get('petSitterPasswd')?.touched
+                "
             >
               <i class="fa fa-times-circle"></i>Veuillez fournir un mot de
               passe.
@@ -140,8 +142,8 @@
             <div
               class="text-danger"
               *ngIf="
-                ownerForm.get('ownerPasswd')?.invalid &&
-                ownerForm.get('ownerPasswd')?.touched
+                petSitterForm.get('petSitterPasswd')?.invalid &&
+                petSitterForm.get('petSitterPasswd')?.touched
               "
             >
               <i class="fa fa-times-circle"></i>Le mot de passe doit contenir au
@@ -149,10 +151,23 @@
               et doit être compris entre 8 et 15 caractères.
             </div>
           </div>
+          <label for="petPreference" class="form-label">Préférence</label>
+          <select
+            class="form-select"
+            aria-label="default select example"
+            formControlName="petPreference"
+          >
+            <option selected ngValue="null" disabled>
+              Choisissez un animal de compagnie
+            </option>
+            <option *ngFor="let item of pets" [value]="item">
+              {{ item }}
+            </option>
+          </select>
           <button
             type="submit"
-            class="btn btn-primary"
-            [disabled]="!ownerForm.valid"
+            class="btn btn-primary mt-3"
+            [disabled]="!petSitterForm.valid"
           >
             Créer mon compte
           </button>

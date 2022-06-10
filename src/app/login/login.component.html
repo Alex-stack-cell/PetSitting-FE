@@ -1,8 +1,4 @@
-<form
-  [formGroup]="loginForm"
-  class="w-25 m-auto my-5"
-  (ngSubmit)="SubmitForm()"
->
+<form [formGroup]="loginForm" class="w-25 m-auto my-5" (ngSubmit)="login()">
   <div class="text-center">
     <h2>Veuillez-vous connecter</h2>
     <div class="form-floating">
@@ -43,6 +39,6 @@
       </p>
       <label for="userPwd">Mot de passe</label>
     </div>
-    <a routerLink="/" class="w-100 btn btn-lg btn-primary">Connection</a>
+    <button type="submit" class="btn btn-primary">Connexion</button>
   </div>
 </form>

@@ -8,6 +8,23 @@
       "birthDate": "1995-11-21",
       "passwd": "Test1234=",
       "score": null
+    },
+    {
+      "id": 2,
+      "lastName": "Jean",
+      "firstName": "louis",
+      "email": "jeanBon@beurre.com",
+      "birthDate": "1964-06-09",
+      "passwd": "Test1234=",
+      "score": null
+    },
+    {
+      "lastName": "Lucas",
+      "firstName": "Vilain",
+      "email": "jeanBon@beurre.com",
+      "birthDate": "1991-2-22",
+      "passwd": "Test1234=",
+      "id": 3
     }
   ],
   "pet": [
@@ -46,24 +63,44 @@
   ],
   "petSitter": [
     {
-      "ID": 1,
-      "FirstName": "Van Haver",
-      "LastName": "Paul",
-      "BirthDate": "1985-03-12 00:00:00.0000000",
-      "Email": "alorson@danse.com",
-      "Passwd": "Stromae12*!",
-      "Score": 5,
-      "PetPreference": "Chien"
+      "id": 1,
+      "lastName": "Does",
+      "firstName": "John",
+      "email": "raphKub@gmail.com",
+      "birthDate": "1981-01-01",
+      "passwd": "Test1234=",
+      "score": null,
+      "petPreference": null
     },
     {
-      "ID": 2,
-      "FirstName": "Marley",
-      "LastName": "Bob",
-      "BirthDate": "1945-02-06 00:00:00.0000000",
-      "Email": "onelove@yahoo.com",
-      "Passwd": "OneLove1234=*",
-      "Score": 4,
-      "PetPreference": "Lapin"
+      "id": 2,
+      "lastName": "doe",
+      "firstName": "test",
+      "email": "raphKub@gmail.com",
+      "birthDate": "1995-11-21",
+      "passwd": "Test1234=",
+      "score": null,
+      "petPreference": null
+    },
+    {
+      "id": 3,
+      "lastName": "Gavriilidis",
+      "firstName": "Alexandre",
+      "email": "alex@gmail.com",
+      "birthDate": "1995-02-21",
+      "passwd": "L0ul0u*21",
+      "score": null,
+      "petPreference": "Lapin"
+    },
+    {
+      "id": 4,
+      "lastName": "Doe",
+      "firstName": "John",
+      "email": "alex@gmail.com",
+      "birthDate": "2002-06-06",
+      "passwd": "L0ul0u*21",
+      "score": null,
+      "petPreference": "Gerbille"
     }
   ],
   "prestation": [
