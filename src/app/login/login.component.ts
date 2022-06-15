@@ -52,9 +52,9 @@ export class LoginComponent implements OnInit {
             this._router.navigateByUrl('/');
           }, 3000);
         },
-        error: () => {
+        error: (error) => {
           setTimeout(() => this.errorAlertBox(), 3000);
-          console.error('Utilisateur non connecté');
+          console.error(error.error);
         },
       });
     }

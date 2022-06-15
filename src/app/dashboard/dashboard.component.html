@@ -1,0 +1,48 @@
+<div class="container-md m-3">
+  <h2>Informations détaillées</h2>
+  <div class="row" *ngIf="owner">
+    <div class="col m-3">
+      <ul>
+        <li>Identifiant: {{ owner.id }}</li>
+        <li>Nom de famille: {{ owner.lastName }}</li>
+        <li>Prénom: {{ owner.firstName }}</li>
+        <li>Email: {{ owner.email }}</li>
+        <li>Date de naissance: {{ this.birthDate }}</li>
+        <li>
+          Score:
+          <i
+            *ngFor="let item of score"
+            class="fa fa-star"
+            aria-hidden="true"
+          ></i>
+          <i class="fa fa-star-o" aria-hidden="true"></i>
+        </li>
+      </ul>
+      <a class="btn btn-primary" routerLink="../edit/owner">
+        <i class="fa fa-pencil" aria-hidden="true"></i> Modifier
+      </a>
+      <a class="btn btn-success m-2" routerLink="/"
+        ><i class="fa fa-plus" aria-hidden="true"></i> Ajouter un animal</a
+      >
+    </div>
+    <div class="col">
+      <div class="card" style="width: 18rem">
+        <img
+          src="https://images.unsplash.com/photo-1618173745201-8e3bf8978acc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=765&q=80"
+          class="card-img-top"
+          alt="espace_personel_chien"
+        />
+        <div class="card-body">
+          <h5 class="card-title">
+            Bienvenue
+            <i class="fa fa-paw" aria-hidden="true"></i>
+          </h5>
+          <p class="card-text">
+            Vous pouvez avoir accès à vos informations personnel et les modifier
+            ici.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

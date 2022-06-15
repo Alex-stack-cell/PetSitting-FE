@@ -11,12 +11,9 @@
       />
       <p
         class="text-danger"
-        *ngIf="
-          !loginForm.get('userEmail')?.touched &&
-          loginForm.get('userEmail')?.errors?.['required']
-        "
+        *ngIf="loginForm.get('userEmail')?.touched && loginForm.get('userEmail')?.errors?.['required']"
       >
-        L'email fournit est invalide🤔
+        <i class="fa fa-times-circle"></i>L'email fournit est incorrecte.
       </p>
       <label for="userEmail">E-mail</label>
     </div>
@@ -30,12 +27,10 @@
       />
       <p
         class="text-danger"
-        *ngIf="
-        !loginForm.get('userPwd')?.touched &&
-        loginForm.get('userPwd')?.errors?.['required']
-      "
+        *ngIf="loginForm.get('userPwd')?.touched && loginForm.get('userPwd')?.errors?.['required']"
       >
-        Le mot de passe fournit est invalide🤔
+        <i class="fa fa-times-circle"></i>Le mot de passe fournit est
+        incorrecte.
       </p>
       <label for="userPwd">Mot de passe</label>
     </div>

@@ -16,7 +16,8 @@ export class NavbarComponent implements OnInit {
     { name: 'Comment ca marche ?', url: '' },
     { name: 'Connexion', url: '/login' },
     { name: "S'inscrire", url: '' },
-    { name: 'Déconnection', url: '' },
+    { name: 'Déconnexion', url: '/' },
+    { name: 'Mon compte', url: '/dashboard' },
   ];
   constructor(public auth: AuthService, private _router: Router) {}
 

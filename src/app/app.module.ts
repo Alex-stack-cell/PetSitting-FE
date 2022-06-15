@@ -13,6 +13,8 @@ import { ModalComponent } from './modal/modal.component';
 import { ModalOwnerComponent } from './modal/modal-owner/modal-owner.component';
 import { SharedModule } from './shared/shared.module';
 import { ModalPetSitterComponent } from './modal/modal-pet-sitter/modal-pet-sitter.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { OwnerComponent } from './edit/owner/owner.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { ModalPetSitterComponent } from './modal/modal-pet-sitter/modal-pet-sitt
     ModalComponent,
     ModalOwnerComponent,
     ModalPetSitterComponent,
+    DashboardComponent,
+    OwnerComponent,
   ],
   imports: [
     BrowserModule,

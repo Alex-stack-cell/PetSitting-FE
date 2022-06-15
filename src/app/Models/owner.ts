@@ -3,7 +3,7 @@ export class Owner {
   lastName: string;
   firstName: string;
   email: string;
-  birthDate: Date;
+  birthDate?: Date;
   passwd: string;
   score?: number | null;
 

@@ -6,30 +6,33 @@ import { map } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt'; // api pour travailler avec JWT
 import * as moment from 'moment';
 import Swal from 'sweetalert2';
+import { getLocaleFirstDayOfWeek } from '@angular/common';
 
 const jwt = new JwtHelperService();
 
 class DecodedToken {
   exp?: number;
-  username?: string;
+  Username?: string;
 }
+
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private _apiUrl: string = 'http://localhost:5000/api/login/owner'; //login pour owner seul
+  private _apiUrlOwner: string = 'http://localhost:5000/api/login';
   private decodedToken? = new DecodedToken();
   public userName?: string;
   constructor(private _http: HttpClient) {}
 
   login(userLogin: UserLogin): Observable<UserLogin> {
-    let response = this._http.post<UserLogin>(this._apiUrl, {
+    let response = this._http.post<UserLogin>(this._apiUrlOwner, {
       userEmail: userLogin.email,
       password: userLogin.passwd,
     });
 
     response.forEach((e) => {
       this.userName = e.firstName;
+
       if (e.token) {
         this.saveToken(e.token);
       }
@@ -40,7 +43,6 @@ export class AuthService {
 
   //sauvegarde le token en session
   private saveToken(token: any): any {
-    this.decodedToken = jwt.decodeToken(token);
     this.decodedToken = jwt.decodeToken(token);
     localStorage.setItem('auth_tkn', token); // le token JWT
     localStorage.setItem('auth_meta', JSON.stringify(this.decodedToken)); // info contenant le username, l'email, la date d'expiration, l'id, etc
@@ -71,8 +73,8 @@ export class AuthService {
   }
 
   public getUserName(): string | void {
-    if (this.userName !== null) {
-      return this.userName;
+    if (this.decodedToken?.Username !== null) {
+      return this.decodedToken?.Username;
     }
   }
 }

@@ -26,6 +26,7 @@
     "font-awesome": "^4.7.0",
     "moment": "^2.29.3",
     "rxjs": "~7.5.0",
+    "startbootstrap-sb-admin": "^7.0.5",
     "sweetalert2": "^11.4.17",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

@@ -1,0 +1,138 @@
+<div class="container m-2">
+  <form (ngSubmit)="onSubmit()" [formGroup]="editForm">
+    <div class="mb-3">
+      <label for="ownerLastName" class="form-label">Nom de famille</label>
+      <input
+        type="text"
+        class="form-control"
+        id="ownerLastName"
+        formControlName="ownerLastName"
+        pattern="[a-zA-Z]+[\s|-]?[a-zA-Z]+[\s|-]?[a-zA-Z]+$"
+        placeholder="Doe"
+        [required]="true"
+      />
+      <div
+        class="text-danger"
+        *ngIf="editForm.get('ownerLastName')?.errors?.['pattern']"
+      >
+        <i class="fa fa-times-circle"></i>Le nom fournit est invalide.
+      </div>
+      <div
+        class="text-danger"
+        *ngIf="editForm.get('ownerLastName')?.errors?.['required'] && editForm.get('ownerLastName')?.touched"
+      >
+        <i class="fa fa-times-circle"></i>Veuillez remplir le champ nom.
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="ownerFirstName" class="form-label">Prénom</label>
+      <input
+        type="text"
+        class="form-control"
+        id="ownerFirstName"
+        formControlName="ownerFirstName"
+        pattern="[a-zA-Z]+[\s|-]?[a-zA-Z]+[\s|-]?[a-zA-Z]+$"
+        placeholder="John"
+        [required]="true"
+      />
+    </div>
+    <div
+      class="text-danger"
+      *ngIf="editForm.get('ownerFirstName')?.errors?.['pattern']"
+    >
+      <i class="fa fa-times-circle"></i>Le prénom fournit est invalide.
+    </div>
+    <div
+      class="text-danger"
+      *ngIf="editForm.get('ownerFirstName')?.errors?.['required'] && editForm.get('ownerFirstName')?.touched"
+    >
+      <i class="fa fa-times-circle"></i>Veuillez remplir le champ prénom.
+    </div>
+    <div class="mb-3">
+      <label for="ownerEmail" class="form-label">Email</label>
+      <input
+        type="email"
+        class="form-control"
+        id="ownerEmail"
+        placeholder="johnDoe@email.com"
+        [required]="true"
+        formControlName="ownerEmail"
+      />
+      <div
+        class="text-danger"
+        *ngIf="editForm.get('ownerEmail')?.touched && editForm.get('ownerEmail')?.errors?.['required']"
+      >
+        <i class="fa fa-times-circle"></i>Veuillez fournir un email
+      </div>
+      <div
+        class="text-danger"
+        *ngIf="
+      editForm.get('ownerEmail')?.errors?.['pattern']
+      "
+      >
+        <i class="fa fa-times-circle"></i>L'email fournit est invalide
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="ownerPasswd" class="form-label">Mot de passe</label>
+      <input
+        type="password"
+        class="form-control"
+        id="ownerPasswd"
+        [required]="true"
+        formControlName="ownerPasswd"
+      />
+      <span id="passwordHelpInline" class="form-text">
+        Doit être compris entre 8 et 15 caractères
+      </span>
+
+      <div
+        class="text-danger"
+        *ngIf="
+      editForm.get('ownerPasswd')?.errors?.['required'] &&
+      editForm.get('ownerPasswd')?.touched
+      "
+      >
+        <i class="fa fa-times-circle"></i>Veuillez fournir un mot de passe.
+      </div>
+      <div
+        class="text-danger"
+        *ngIf="
+          editForm.get('ownerPasswd')?.invalid &&
+          editForm.get('ownerPasswd')?.touched
+        "
+      >
+        <i class="fa fa-times-circle"></i>Le mot de passe doit contenir au moins
+        1 chiffre, 1 caractère spéciale, 1 majuscule, 1 minuscule, et doit être
+        compris entre 8 et 15 caractères.
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="confirmOwnerPasswd" class="form-label"
+        >Confirmer votre mot de passe</label
+      >
+      <input
+        type="password"
+        class="form-control"
+        id="confirmOwnerPasswd"
+        [required]="true"
+        formControlName="confirmOwnerPasswd"
+      />
+      <div
+        class="text-danger"
+        *ngIf="editForm.get('confirmOwnerPasswd')?.touched &&editForm.get('confirmOwnerPasswd')?.errors?.['required'] "
+      >
+        <i class="fa fa-times-circle"></i>Ce champ est requis!
+      </div>
+      <div
+        class="text-danger"
+        *ngIf="editForm.get('confirmOwnerPasswd')?.errors?.['password']"
+      >
+        <i class="fa fa-times-circle"></i>Les mots de passe sont différents !
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="!editForm.valid">
+      Submit
+    </button>
+  </form>
+</div>
