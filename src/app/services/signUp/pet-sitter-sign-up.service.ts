@@ -1,12 +1,13 @@
 import { Injectable, getNgModuleById } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { PetSitter } from '../Models/petSitter';
+import { PetSitter } from '../../Models/petSitter';
+import { User } from 'src/app/Models/Account/User';
 
 @Injectable({
   providedIn: 'root',
 })
-export class PetSitterSigneUpService {
+export class PetSitterSignUp {
   //live date
   private _apiUrl: string = 'http://localhost:5000/api/PetSitter';
   //mock data
@@ -14,7 +15,7 @@ export class PetSitterSigneUpService {
 
   constructor(private _http: HttpClient) {}
 
-  add(petSitter: PetSitter): Observable<PetSitter> {
-    return this._http.post<PetSitter>(this._apiUrl, petSitter);
+  add(petSitter: User): Observable<User> {
+    return this._http.post<User>(this._apiUrl, petSitter);
   }
 }

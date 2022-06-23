@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  ValidatorFn,
-  Validators,
-} from '@angular/forms';
-import { Owner } from 'src/app/Models/owner';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { User } from 'src/app/Models/Account/User';
 import { OwnerService } from 'src/app/services/update/owner.service';
+import { BaseUserForm } from 'src/app/Forms/baseUserForm';
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-owner',
@@ -17,32 +14,20 @@ import { OwnerService } from 'src/app/services/update/owner.service';
 export class OwnerComponent implements OnInit {
   auth_meta_json = localStorage.getItem('auth_meta');
   editForm: FormGroup;
-  ownerToEdit: Owner = new Owner(0, '', '', '', new Date(), '', null);
-  constructor(private _fb: FormBuilder, private _ownerService: OwnerService) {
-    this.editForm = _fb.group(
-      {
-        ownerLastName: [null],
-        ownerFirstName: [null],
-        ownerEmail: [
-          null,
-          [
-            Validators.pattern(
-              /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/
-            ),
-          ],
-        ],
-        ownerPasswd: [
-          null,
-          [
-            Validators.pattern(
-              /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/
-            ),
-          ],
-        ],
-        confirmOwnerPasswd: [null],
-      },
-      { validator: this.checkPassword } // validation de la cohérence des mdp fournis
-    );
+  ownerToEdit: User = new User();
+  constructor(
+    private _fb: FormBuilder,
+    private _ownerService: OwnerService,
+    private _router: Router
+  ) {
+    this.editForm = _fb.group({ ...BaseUserForm });
+
+    this._ownerService
+      .getOwnerInfo(JSON.parse(this.auth_meta_json).Id)
+      .subscribe((data) => {
+        this.editForm.patchValue(data);
+        Object.assign(this.ownerToEdit, data);
+      });
   }
 
   ngOnInit(): void {}
@@ -51,17 +36,24 @@ export class OwnerComponent implements OnInit {
     if (this.editForm.invalid) {
       alert('Veuillez remplir le formulaire, svp.');
     }
+    Object.assign(this.ownerToEdit, this.editForm.value);
 
-    if (this.auth_meta_json) {
-      let auth_meta_object = JSON.parse(this.auth_meta_json);
-      this.ownerToEdit.id = auth_meta_object.Id;
-      this.ownerToEdit.lastName = this.editForm.value.ownerLastName;
-      this.ownerToEdit.firstName = this.editForm.value.ownerFirstName;
-      this.ownerToEdit.email = this.editForm.value.ownerEmail;
-      this.ownerToEdit.passwd = this.editForm.value.ownerPasswd;
+    let response = this._ownerService.updateOwner(
+      this.ownerToEdit,
+      this.ownerToEdit.id
+    );
+    if (response != null) {
+      response.subscribe({
+        next: (data) => {
+          this.ownerToEdit = data;
+          this.showSuccessAlert();
+          this._router.navigate(['/dashboard']);
+        },
+        error: () => {
+          this.errorAlertBox();
+        },
+      });
     }
-
-    console.log(this.ownerToEdit);
   }
 
   // Vérifie la cohérence du mdp modifié
@@ -78,5 +70,17 @@ export class OwnerComponent implements OnInit {
     } else {
       return null;
     }
+  }
+
+  showSuccessAlert(): void {
+    Swal.fire('Bravo', 'Vous avez bien modifié votre compte  🥳', 'success');
+  }
+
+  errorAlertBox() {
+    Swal.fire(
+      'Oops',
+      'Une erreur est survenue lors de la modification 💥',
+      'error'
+    );
   }
 }

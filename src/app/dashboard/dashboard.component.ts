@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Owner } from '../Models/owner';
-import { UserLogin } from '../Models/userLogin';
+import { User } from '../Models/Account/User';
 import { OwnerService } from '../services/signIn/owner.service';
+import { PetSitterService } from '../services/signIn/pet-sitter.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,33 +9,44 @@ import { OwnerService } from '../services/signIn/owner.service';
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
-  owner?: Owner;
+  user?: User;
   birthDate?: string;
-  score: number[] = []; // permet d'afficher les étoiles des scores
-  constructor(private _ownerService: OwnerService) {}
+  scoreBoard: number[] = Array(5); // permet d'afficher les étoiles associés aux scores
+  userScore: number = 0;
+  nbEmptyStar: number[] = Array(5); // nombre d'étoile vide
+  nbFullStar: number[] = Array(5); // nombre d'étoile pleine
+  constructor(
+    private _ownerService: OwnerService,
+    private _petSitterService: PetSitterService
+  ) {}
 
   ngOnInit(): void {
     // Récupération des info contenu dans le token (décriptée)
     let auth_meta_json = localStorage.getItem('auth_meta');
+    let auth_tkn = localStorage.getItem('auth_tkn');
     // Si le contenu n'est pas vide accéder au information de l'utilisateur selon son profile
     if (auth_meta_json) {
       let auth_meta_object = JSON.parse(auth_meta_json);
       let isOwner = auth_meta_object.Owner;
-
-      // Si le compte est un propriétaire alors on appel utilise le controlleur du Owner
-      if (isOwner == 'True') {
-        this._ownerService.getInfo(auth_meta_object.Id).subscribe({
+      // Si le compte est un propriétaire alors on appel le controlleur du Owner
+      if (isOwner == true) {
+        this._ownerService.getOwnerInfo(auth_meta_object.Id).subscribe({
           next: (data) => {
-            this.owner = data[0]; // enregistrer les données du token
-            let limit = this.owner?.score; // permet de définir la taille du tableau pour boucler n fois afin d'afficher les icones
-
-            if (limit) {
-              for (let i = 0; i < limit; i++) {
-                this.score.push(i);
-              }
-            }
-
-            this.formattingDate();
+            this.user = data; // enregistrer les données du token
+            this.user.Owner = isOwner;
+            console.log(this.user);
+            this.assigningStar();
+            this.formattingDate(this.user.birthDate);
+          },
+        });
+      } else if (isOwner == false) {
+        // Si le compte est un petsitter alors on appel le controlleur du PetSitter
+        this._petSitterService.getPetSitterInfo(auth_meta_object.Id).subscribe({
+          next: (data) => {
+            this.user = data;
+            this.user.Owner = isOwner;
+            this.assigningStar();
+            this.formattingDate(this.user.birthDate);
           },
         });
       }
@@ -43,9 +54,8 @@ export class DashboardComponent implements OnInit {
   }
 
   //Formatte la date en JJ/MM/AAAA
-  formattingDate() {
-    if (this.owner?.birthDate)
-      this.birthDate = this.owner?.birthDate.toString();
+  formattingDate(userDate: Date | undefined) {
+    if (userDate != undefined) this.birthDate = userDate.toString();
 
     this.birthDate =
       this.birthDate?.substring(8, 10) +
@@ -53,5 +63,12 @@ export class DashboardComponent implements OnInit {
       this.birthDate?.substring(5, 7) +
       '/' +
       this.birthDate?.substring(0, 4);
+  }
+
+  assigningStar() {
+    if (this.userScore != null) {
+      this.nbFullStar.length = this.userScore;
+      this.nbEmptyStar.length = this.scoreBoard.length - this.userScore;
+    }
   }
 }

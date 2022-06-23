@@ -6,10 +6,11 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
+import { User } from 'src/app/Models/Account/User';
 
 import { PetSitter } from 'src/app/Models/petSitter';
 
-import { PetSitterSigneUpService } from 'src/app/services/pet-sitter-signe-up.service';
+import { PetSitterSignUp } from 'src/app/services/signUp/pet-sitter-sign-up.service';
 
 import Swal from 'sweetalert2';
 
@@ -22,20 +23,12 @@ export class ModalPetSitterComponent implements OnInit {
   displaySpinner?: boolean;
   pets: string[] = ['Chien', 'Chat', 'Lapin', 'Gerbille', 'Tortue'];
   petSitterForm: FormGroup;
-  petSitterToAdd: PetSitter = new PetSitter(
-    0,
-    '',
-    '',
-    '',
-    new Date(),
-    '',
-    null,
-    null
-  );
+
+  petSitterToAdd: User = new User();
 
   constructor(
     private _formBuilder: FormBuilder,
-    private _petSitterService: PetSitterSigneUpService
+    private _petSitterService: PetSitterSignUp
   ) {
     this.petSitterForm = _formBuilder.group({
       petSitterLastName: [null],

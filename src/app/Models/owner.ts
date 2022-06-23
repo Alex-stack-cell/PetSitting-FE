@@ -5,7 +5,7 @@ export class Owner {
   email: string;
   birthDate?: Date;
   passwd: string;
-  score?: number | null;
+  // score?: number | null;
 
   constructor(
     id: number,
@@ -13,8 +13,8 @@ export class Owner {
     lastname: string,
     email: string,
     birthdate: Date,
-    passwd: string,
-    score: number | null
+    passwd: string
+    // score: number | null
   ) {
     this.id = id;
     this.lastName = lastname;
@@ -22,6 +22,6 @@ export class Owner {
     this.email = email;
     this.birthDate = birthdate;
     this.passwd = passwd;
-    this.score = score;
+    // this.score = score;
   }
 }

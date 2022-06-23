@@ -1,0 +1,17 @@
+<div
+  *ngIf="
+    control &&
+    control.errors &&
+    (control.touched || control.dirty) &&
+    !control.disabled
+  "
+>
+  <div class="text-danger" *ngIf="control.errors?.['pattern']">
+    <app-info-icon></app-info-icon>{{ patternMessage }}
+  </div>
+  <div class="text-danger" *ngIf="control.errors?.['required']">
+    <app-info-icon></app-info-icon> {{ requiredMessage }}
+  </div>
+</div>
+
+<ng-template> </ng-template>

@@ -6,12 +6,13 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
+import { User } from 'src/app/Models/Account/User';
 
 import { Owner } from 'src/app/Models/owner';
 
 import Swal from 'sweetalert2';
 
-import { OwnerSignUpService } from '../../services/owner-signUp.service';
+import { OwnerSignUp } from '../../services/signUp/owner-signUp.service';
 
 @Component({
   selector: 'app-modal-owner',
@@ -20,11 +21,11 @@ import { OwnerSignUpService } from '../../services/owner-signUp.service';
 })
 export class ModalOwnerComponent implements OnInit {
   displaySpinner?: boolean;
-  ownerToAdd: Owner = new Owner(0, '', '', '', new Date(), '', null);
+  ownerToAdd: User = new User();
   ownerForm: FormGroup;
   constructor(
     private _formBuilder: FormBuilder,
-    private _ownerService: OwnerSignUpService
+    private _ownerService: OwnerSignUp
   ) {
     this.ownerForm = this._formBuilder.group({
       ownerLastName: [null],

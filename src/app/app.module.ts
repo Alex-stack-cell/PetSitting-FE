@@ -8,13 +8,18 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ModalComponent } from './modal/modal.component';
 import { ModalOwnerComponent } from './modal/modal-owner/modal-owner.component';
 import { SharedModule } from './shared/shared.module';
 import { ModalPetSitterComponent } from './modal/modal-pet-sitter/modal-pet-sitter.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { OwnerComponent } from './edit/owner/owner.component';
+import { TokenInterceptor } from './Interceptors/token-interceptor.interceptor';
+import { OwnerService } from './services/update/owner.service';
+import { FormErrorComponent } from './components/form-error/form-error.component';
+import { InfoIconComponent } from './components/info-icon/info-icon.component';
+import { AddAnimalComponent } from './edit/owner/add-animal/add-animal.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +32,9 @@ import { OwnerComponent } from './edit/owner/owner.component';
     ModalPetSitterComponent,
     DashboardComponent,
     OwnerComponent,
+    FormErrorComponent,
+    InfoIconComponent,
+    AddAnimalComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,7 +45,9 @@ import { OwnerComponent } from './edit/owner/owner.component';
     ReactiveFormsModule,
     SharedModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

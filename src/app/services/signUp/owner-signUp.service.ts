@@ -2,13 +2,14 @@ import { getLocaleCurrencyCode } from '@angular/common';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { getNgModuleById, Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
+import { User } from 'src/app/Models/Account/User';
 
-import { Owner } from '../Models/owner';
+import { Owner } from '../../Models/owner';
 
 @Injectable({
   providedIn: 'root',
 })
-export class OwnerSignUpService {
+export class OwnerSignUp {
   //live date
   private _apiUrl: string = 'http://localhost:5000/api/Owner';
   //mock data
@@ -16,8 +17,8 @@ export class OwnerSignUpService {
 
   constructor(private _http: HttpClient) {}
 
-  add(owner: Owner): Observable<Owner> {
-    return this._http.post<Owner>(this._apiUrl, owner); //swap _apiUrl for _mockUrl during testing
+  add(owner: User): Observable<User> {
+    return this._http.post<User>(this._apiUrl, owner); //swap _apiUrl for _mockUrl during testing
   }
 
   handleError(error: HttpErrorResponse) {

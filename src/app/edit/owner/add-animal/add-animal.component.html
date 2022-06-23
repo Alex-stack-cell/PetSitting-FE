@@ -1,0 +1,96 @@
+<div class="container m-2">
+  <div class="py-5 text-center">
+    <h2>Ajouter un animal de compagnie</h2>
+    <p class="lead">
+      Veuillez renseigner les informations ci-dessous de votre animal de
+      compagnie.
+    </p>
+  </div>
+  <div class="row g-5">
+    <div class="col-md-5 col-lg-4">
+      <img
+        src="https://images.unsplash.com/photo-1591946614720-90a587da4a36?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+        alt="add_pet"
+        class="img-fluid rounded"
+      />
+    </div>
+    <div class="col-md-7 col-lg-8">
+      <h4>
+        <span class="badge bg-primary rounded-pill"
+          ><i class="fa fa-paw" aria-hidden="true"></i>
+        </span>
+        Informations de mon compagnon poilu.
+      </h4>
+      <form (ngSubmit)="Submit()" [formGroup]="addAnimalForm">
+        <div class="mb-3">
+          <label for="nickName" class="form-label">Son prénom:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="nickName"
+            formControlName="nickName"
+            pattern="[a-zA-Z]+[\s|-]?[a-zA-Z]+[\s|-]?[a-zA-Z]+$"
+            placeholder="Minou-minou"
+            [required]="true"
+          />
+          <app-form-error
+            [control]="addAnimalForm.get('lastName')"
+            patternMessage="Le nom est invalide."
+            requiredMessage="Veuillez remplir ce champ."
+          ></app-form-error>
+        </div>
+        <div class="mb-3">
+          <label for="type" class="form-label">Catégorie:</label>
+          <select
+            class="form-select"
+            aria-label="default select example"
+            formControlName="type"
+            [required]="true"
+          >
+            <option selected ngValue="null" disabled>
+              Choisissez une catégorie.
+            </option>
+            <option *ngFor="let item of pets" [value]="item">{{ item }}</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="breed" class="form-label">Race:</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="breed"
+            pattern="[a-zA-Z]+[\s|-]?[a-zA-Z]+[\s|-]?[a-zA-Z]+$"
+          />
+          <app-form-error
+            [control]="addAnimalForm.get('breed')"
+            patternMessage="Valeur invalide."
+            requiredMessage="Veuillez remplir ce champ."
+          ></app-form-error>
+        </div>
+        <div class="mb-3">
+          <label for="birthDate" class="form-label">Date de naissance:</label>
+          <input
+            type="date"
+            class="form-control"
+            id="birthDate"
+            formControlName="birthDate"
+            [required]="true"
+          />
+          <app-form-error
+            [control]="addAnimalForm.get('birthDate')"
+            patternMessage="La date est invalide."
+            requiredMessage="Veuillez remplir le champ date."
+          ></app-form-error>
+        </div>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="!addAnimalForm.valid"
+        >
+          Ajouter
+        </button>
+        <a routerLink="/dashboard" class="btn btn-secondary m-2">Retour</a>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { UserLogin } from '../Models/userLogin';
+import { UserLogin } from '../../Models/userLogin';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt'; // api pour travailler avec JWT
@@ -57,7 +57,7 @@ export class AuthService {
         'https://cache.desktopnexus.com/thumbseg/2406/2406463-bigthumbnail.jpg',
       imageWidth: 400,
       imageHeight: 200,
-      imageAlt: 'Custom image',
+      imageAlt: 'Goodbye picture',
     });
     localStorage.removeItem('auth_tkn');
     localStorage.removeItem('auth_meta');

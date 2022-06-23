@@ -9,13 +9,12 @@
         placeholder="nom@mail.com"
         formControlName="userEmail"
       />
-      <p
-        class="text-danger"
-        *ngIf="loginForm.get('userEmail')?.touched && loginForm.get('userEmail')?.errors?.['required']"
-      >
-        <i class="fa fa-times-circle"></i>L'email fournit est incorrecte.
-      </p>
       <label for="userEmail">E-mail</label>
+      <app-form-error
+        [control]="loginForm.get('userEmail')"
+        patternMessage="L'email est invalide."
+        requiredMessage="L'email fournit est incorrecte."
+      ></app-form-error>
     </div>
     <div class="form-floating">
       <input
@@ -25,15 +24,13 @@
         placeholder="Mot de passe"
         formControlName="userPwd"
       />
-      <p
-        class="text-danger"
-        *ngIf="loginForm.get('userPwd')?.touched && loginForm.get('userPwd')?.errors?.['required']"
-      >
-        <i class="fa fa-times-circle"></i>Le mot de passe fournit est
-        incorrecte.
-      </p>
+      <app-form-error
+        [control]="loginForm.get('userPwd')"
+        patternMessage="Le mot de passe est invalide."
+        requiredMessage="Le mot de passe fournit est incorrecte."
+      ></app-form-error>
       <label for="userPwd">Mot de passe</label>
     </div>
-    <button type="submit" class="btn btn-primary">Connexion</button>
+    <button type="submit" class="btn btn-primary m-2">Connexion</button>
   </div>
 </form>

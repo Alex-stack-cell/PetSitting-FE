@@ -1,28 +1,57 @@
 <div class="container-md m-3">
   <h2>Informations détaillées</h2>
-  <div class="row" *ngIf="owner">
+  <div class="row">
     <div class="col m-3">
       <ul>
-        <li>Identifiant: {{ owner.id }}</li>
-        <li>Nom de famille: {{ owner.lastName }}</li>
-        <li>Prénom: {{ owner.firstName }}</li>
-        <li>Email: {{ owner.email }}</li>
+        <li>Identifiant: {{ user.id }}</li>
+        <li>Nom de famille: {{ user.lastName }}</li>
+        <li>Prénom: {{ user.firstName }}</li>
+        <li>Email: {{ user.email }}</li>
         <li>Date de naissance: {{ this.birthDate }}</li>
+        <li *ngIf="!user.Owner">Préfèrence : {{ user.petPreference }}</li>
         <li>
           Score:
-          <i
-            *ngFor="let item of score"
-            class="fa fa-star"
-            aria-hidden="true"
-          ></i>
-          <i class="fa fa-star-o" aria-hidden="true"></i>
+          <!-- Si le score est null on affiche des étoiles vides  -->
+          <i *ngIf="this.user.score == null">
+            <i
+              *ngFor="let item of scoreBoard"
+              class="fa fa-star-o"
+              aria-hidden="true"
+            ></i>
+          </i>
+          <i *ngIf="this.user.score != null">
+            <i *ngFor="let item of nbFullStar; index as i">
+              <i class="fa fa-star" aria-hidden="true"></i>
+            </i>
+            <i
+              *ngFor="let item of nbEmptyStar"
+              class="fa fa-star-o"
+              aria-hidden="true"
+            >
+            </i>
+          </i>
         </li>
       </ul>
-      <a class="btn btn-primary" routerLink="../edit/owner">
+      <a
+        *ngIf="user.Owner == true"
+        class="btn btn-primary"
+        routerLink="/edit/owner"
+      >
         <i class="fa fa-pencil" aria-hidden="true"></i> Modifier
       </a>
-      <a class="btn btn-success m-2" routerLink="/"
-        ><i class="fa fa-plus" aria-hidden="true"></i> Ajouter un animal</a
+      <a
+        *ngIf="user.Owner == false"
+        class="btn btn-primary"
+        routerLink="/edit/petSitter"
+      >
+        <i class="fa fa-pencil" aria-hidden="true"></i> Modifier
+      </a>
+      <a
+        *ngIf="user.Owner == true"
+        class="btn btn-success m-2"
+        routerLink="/edit/owner/addAnimal"
+        ><i class="fa fa-plus-circle" aria-hidden="true"></i> Ajouter un
+        animal</a
       >
     </div>
     <div class="col">

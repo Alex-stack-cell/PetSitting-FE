@@ -5,7 +5,7 @@ export class PetSitter {
   email: string;
   birthDate: Date;
   passwd: string;
-  score?: number | null;
+  // score?: number | null;
   petPreference?: string | null;
 
   constructor(
@@ -15,7 +15,7 @@ export class PetSitter {
     email: string,
     birthdate: Date,
     passwd: string,
-    score: number | null,
+    // score: number | null,
     petPreference: string | null
   ) {
     this.id = id;
@@ -24,7 +24,7 @@ export class PetSitter {
     this.email = email;
     this.birthDate = birthdate;
     this.passwd = passwd;
-    this.score = score;
+    // this.score = score;
     this.petPreference = petPreference;
   }
 }

@@ -9,7 +9,7 @@ import {
 import { Observable } from 'rxjs';
 import { Owner } from '../Models/owner';
 import { Router } from '@angular/router';
-import { AuthService } from '../services/auth-service.service';
+import { AuthService } from '../services/logOut/auth-service.service';
 import { UserLogin } from '../Models/userLogin';
 import Swal from 'sweetalert2';
 
@@ -47,14 +47,11 @@ export class LoginComponent implements OnInit {
       this.userLogin.passwd = values.userPwd;
       this._authService.login(this.userLogin).subscribe({
         next: () => {
-          setTimeout(() => {
-            this.showSuccessAlert();
-            this._router.navigateByUrl('/');
-          }, 3000);
+          this.showSuccessAlert();
+          this._router.navigateByUrl('/');
         },
         error: (error) => {
           setTimeout(() => this.errorAlertBox(), 3000);
-          console.error(error.error);
         },
       });
     }
