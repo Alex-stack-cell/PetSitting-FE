@@ -47,11 +47,12 @@ export class LoginComponent implements OnInit {
       this.userLogin.passwd = values.userPwd;
       this._authService.login(this.userLogin).subscribe({
         next: () => {
+          console.log(this._authService.getUserName());
           this.showSuccessAlert();
           this._router.navigateByUrl('/');
         },
         error: (error) => {
-          setTimeout(() => this.errorAlertBox(), 3000);
+          this.errorAlertBox();
         },
       });
     }
@@ -59,11 +60,14 @@ export class LoginComponent implements OnInit {
   }
 
   showSuccessAlert(): void {
-    Swal.fire(
-      'Bienvenue',
-      'Vous êtes connecté ' + this._authService.getUserName() + ' 🥳',
-      'success'
-    );
+    if (this._authService.getUserName() != undefined) {
+      Swal.fire(
+        'Bienvenue',
+        'Vous êtes connecté ' + this._authService.getUserName() + ' 🥳',
+        'success'
+      );
+    }
+    Swal.fire('Bienvenue', 'Vous êtes connecté 🥳', 'success');
   }
 
   errorAlertBox() {

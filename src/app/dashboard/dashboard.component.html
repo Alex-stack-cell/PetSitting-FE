@@ -53,6 +53,53 @@
         ><i class="fa fa-plus-circle" aria-hidden="true"></i> Ajouter un
         animal</a
       >
+      <table
+        *ngIf="user.Owner == true && pets.length > 0"
+        class="table table-striped table-hover"
+      >
+        <thead>
+          <tr>
+            <th scope="col">Nom</th>
+            <th scope="col">Catégories</th>
+            <th scope="col">Race</th>
+            <th scope="col">Date de naissance</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pet of pets">
+            <td>{{ pet.nickName }}</td>
+            <td>{{ pet.type }}</td>
+            <td>{{ pet.breed }}</td>
+            <td>{{ pet.birthDate }}</td>
+            <td>
+              <i
+                class="fa fa-pencil m-2"
+                role="button"
+                aria-hidden="true"
+                (click)="editPet()"
+                *ngIf="!isEdited"
+              ></i
+              ><i
+                *ngIf="!isEdited"
+                class="fa fa-trash"
+                role="button"
+                aria-hidden="true"
+                (click)="deletePet(pet.nickName, pet.id)"
+              ></i>
+              <i
+                ><i
+                  *ngIf="isEdited"
+                  class="fa fa-check"
+                  role="button"
+                  (click)="editPet()"
+                  aria-hidden="true"
+                ></i>
+              </i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
     <div class="col">
       <div class="card" style="width: 18rem">

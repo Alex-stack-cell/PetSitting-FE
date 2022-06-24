@@ -21,7 +21,7 @@
         </span>
         Informations de mon compagnon poilu.
       </h4>
-      <form (ngSubmit)="Submit()" [formGroup]="addAnimalForm">
+      <form (ngSubmit)="onSubmit()" [formGroup]="addAnimalForm">
         <div class="mb-3">
           <label for="nickName" class="form-label">Son prénom:</label>
           <input
