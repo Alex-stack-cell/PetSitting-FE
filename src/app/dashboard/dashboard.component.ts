@@ -25,6 +25,7 @@ export class DashboardComponent implements OnInit {
   nbEmptyStar: number[] = Array(5); // nombre d'étoile vide
   nbFullStar: number[] = Array(5); // nombre d'étoile pleine
   categories: string[] = ['Chien', 'Chat', 'Lapin', 'Gerbille', 'Tortue'];
+  auth_meta_json?: string = localStorage.getItem('auth_meta');
 
   constructor(
     private _ownerService: OwnerService,
@@ -44,11 +45,11 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     // Récupération des info contenu dans le token (décriptée)
-    let auth_meta_json = localStorage.getItem('auth_meta');
+    // let auth_meta_json = localStorage.getItem('auth_meta');
     // let auth_tkn = localStorage.getItem('auth_tkn');
     // Si le contenu n'est pas vide accéder au information de l'utilisateur selon son profile
-    if (auth_meta_json) {
-      let auth_meta_object = JSON.parse(auth_meta_json);
+    if (this.auth_meta_json) {
+      let auth_meta_object = JSON.parse(this.auth_meta_json);
       let isOwner = auth_meta_object.Owner;
       // Si le compte est un propriétaire alors on appel le controlleur du Owner
       if (isOwner == true) {
@@ -124,7 +125,7 @@ export class DashboardComponent implements OnInit {
 
   editPet(pet: Pet): boolean {
     if (pet.isEdit) {
-      this.submitModification();
+      this.submitModification(pet.id);
       pet.isEdit = false;
     } else {
       pet.isEdit = true;
@@ -132,10 +133,30 @@ export class DashboardComponent implements OnInit {
     return pet.isEdit;
   }
 
-  submitModification() {
+  submitModification(id: number | null): void {
     Object.assign(this.petToEdit, this.editForm.value);
-    console.log(this.editForm.value);
     this.isEdited = false;
+    this.petToEdit.iD_Owner = this.petToEdit.id = id;
+    if (this.auth_meta_json) {
+      let auth_meta_object = JSON.parse(this.auth_meta_json);
+      this.petToEdit.iD_Owner = auth_meta_object.Id;
+    }
+    let response = this._petService.updatePet(
+      this.petToEdit.id,
+      this.petToEdit
+    );
+    if (response != null) {
+      response.subscribe({
+        next: (data) => {
+          this.petToEdit = data;
+          console.log(this.petToEdit);
+          window.location.reload();
+        },
+        error: () => {
+          this.errorAlertBox();
+        },
+      });
+    }
   }
 
   showSuccessAlert(): void {
@@ -143,10 +164,6 @@ export class DashboardComponent implements OnInit {
   }
 
   errorAlertBox() {
-    Swal.fire(
-      'Oops',
-      'Une erreur est survenue lors de la supression. 💥',
-      'error'
-    );
+    Swal.fire('Oops', 'Une erreur est survenue.💥', 'error');
   }
 }

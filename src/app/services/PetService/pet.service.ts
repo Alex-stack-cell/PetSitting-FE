@@ -10,6 +10,7 @@ export class PetService {
   private _getPet = 'http://localhost:5000/api/Pet/owner=';
   private _deletePet = 'http://localhost:5000/api/Pet/';
   private _addPet = 'http://localhost:5000/api/Pet/';
+  private _updatePet = 'http://localhost:5000/api/Pet/';
 
   constructor(private _http: HttpClient) {}
 
@@ -21,5 +22,9 @@ export class PetService {
   }
   addNewPet(pet: Pet): Observable<Pet> {
     return this._http.post(this._addPet, pet);
+  }
+
+  updatePet(id: number, pet: Pet): Observable<Pet> {
+    return this._http.put(this._updatePet + id, pet);
   }
 }
