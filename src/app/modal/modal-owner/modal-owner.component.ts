@@ -7,12 +7,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { User } from 'src/app/Models/Account/User';
-
-import { Owner } from 'src/app/Models/owner';
-
 import Swal from 'sweetalert2';
-
-import { OwnerSignUp } from '../../services/signUp/owner-signUp.service';
+import { OwnerService } from 'src/app/services/OwnerService/owner.service';
 
 @Component({
   selector: 'app-modal-owner',
@@ -25,7 +21,7 @@ export class ModalOwnerComponent implements OnInit {
   ownerForm: FormGroup;
   constructor(
     private _formBuilder: FormBuilder,
-    private _ownerService: OwnerSignUp
+    private _ownerService: OwnerService
   ) {
     this.ownerForm = this._formBuilder.group({
       ownerLastName: [null],
@@ -70,6 +66,8 @@ export class ModalOwnerComponent implements OnInit {
     if (this.ownerForm.invalid) {
       alert('Veuillez remplir le formulaire, svp.');
     }
+
+    // Object.assign(this.ownerToAdd,this.ownerForm.value);
 
     this.ownerToAdd.lastName = this.ownerForm.value.ownerLastName;
     this.ownerToAdd.firstName = this.ownerForm.value.ownerFirstName;

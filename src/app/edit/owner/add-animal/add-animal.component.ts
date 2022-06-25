@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Pet } from 'src/app/Models/pet';
-import { PetService } from 'src/app/services/update/pet.service';
+import { PetService } from 'src/app/services/PetService/pet.service';
 import Swal from 'sweetalert2';
 
 @Component({

@@ -2,18 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UserLogin } from '../../Models/userLogin';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt'; // api pour travailler avec JWT
-import * as moment from 'moment';
+import { DecodedToken } from 'src/app/Models/Authentication/DecodedToken';
 import Swal from 'sweetalert2';
-import { getLocaleFirstDayOfWeek } from '@angular/common';
 
 const jwt = new JwtHelperService();
-
-class DecodedToken {
-  exp?: number;
-  Username?: string;
-}
 
 @Injectable({
   providedIn: 'root',

@@ -8,9 +8,7 @@ import {
 } from '@angular/forms';
 import { User } from 'src/app/Models/Account/User';
 
-import { PetSitter } from 'src/app/Models/petSitter';
-
-import { PetSitterSignUp } from 'src/app/services/signUp/pet-sitter-sign-up.service';
+import { PetSitterService } from 'src/app/services/PetSitterService/pet-sitter.service';
 
 import Swal from 'sweetalert2';
 
@@ -28,7 +26,7 @@ export class ModalPetSitterComponent implements OnInit {
 
   constructor(
     private _formBuilder: FormBuilder,
-    private _petSitterService: PetSitterSignUp
+    private _petSitterService: PetSitterService
   ) {
     this.petSitterForm = _formBuilder.group({
       petSitterLastName: [null],

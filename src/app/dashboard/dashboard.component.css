@@ -5,3 +5,12 @@ li {
 .card {
   box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
 }
+
+input {
+  background-color: inherit;
+  border: none;
+}
+
+input:focus {
+  outline: none !important;
+}

@@ -1,15 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormsModule,
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { Observable } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Owner } from '../Models/owner';
 import { Router } from '@angular/router';
-import { AuthService } from '../services/logOut/auth-service.service';
+import { AuthService } from '../services/AuthService/auth-service.service';
 import { UserLogin } from '../Models/userLogin';
 import Swal from 'sweetalert2';
 

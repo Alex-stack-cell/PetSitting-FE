@@ -5,4 +5,5 @@ export class Pet {
   type?: string;
   breed?: string;
   birthDate?: Date;
+  isEdit?: boolean;
 }

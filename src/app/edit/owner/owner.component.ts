@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { User } from 'src/app/Models/Account/User';
-import { OwnerService } from 'src/app/services/update/owner.service';
+import { OwnerService } from 'src/app/services/OwnerService/owner.service';
 import { BaseUserForm } from 'src/app/Forms/baseUserForm';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';

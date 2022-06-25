@@ -11,12 +11,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ModalComponent } from './modal/modal.component';
 import { ModalOwnerComponent } from './modal/modal-owner/modal-owner.component';
-import { SharedModule } from './shared/shared.module';
 import { ModalPetSitterComponent } from './modal/modal-pet-sitter/modal-pet-sitter.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { OwnerComponent } from './edit/owner/owner.component';
 import { TokenInterceptor } from './Interceptors/token-interceptor.interceptor';
-import { OwnerService } from './services/update/owner.service';
 import { FormErrorComponent } from './components/form-error/form-error.component';
 import { InfoIconComponent } from './components/info-icon/info-icon.component';
 import { AddAnimalComponent } from './edit/owner/add-animal/add-animal.component';
@@ -43,7 +41,6 @@ import { AddAnimalComponent } from './edit/owner/add-animal/add-animal.component
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },

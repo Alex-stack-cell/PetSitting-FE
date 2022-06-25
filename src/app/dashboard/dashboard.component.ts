@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../Models/Account/User';
 import { Pet } from '../Models/pet';
-import { PetService } from '../services/read/pet.service';
-import { OwnerService } from '../services/signIn/owner.service';
-import { PetSitterService } from '../services/signIn/pet-sitter.service';
+import { PetService } from '../services/PetService/pet.service';
+import { OwnerService } from '../services/OwnerService/owner.service';
+import { PetSitterService } from '../services/PetSitterService/pet-sitter.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,17 +17,30 @@ export class DashboardComponent implements OnInit {
   user?: User;
   isEdited: boolean = false;
   pets?: Pet[] = Array();
+  petToEdit: Pet = new Pet();
   birthDate?: string;
+  editForm?: FormGroup;
   scoreBoard: number[] = Array(5); // permet d'afficher les étoiles associés aux scores
   userScore: number = 0;
   nbEmptyStar: number[] = Array(5); // nombre d'étoile vide
   nbFullStar: number[] = Array(5); // nombre d'étoile pleine
+  categories: string[] = ['Chien', 'Chat', 'Lapin', 'Gerbille', 'Tortue'];
+
   constructor(
     private _ownerService: OwnerService,
     private _petSitterService: PetSitterService,
     private _petService: PetService,
-    private _router: Router
-  ) {}
+    private _router: Router,
+    private _fb: FormBuilder
+  ) {
+    this.editForm = _fb.group({
+      nickName: [null],
+      type: [null],
+      breed: [null],
+      birthDate: [null],
+    });
+    this.petToEdit.isEdit = false;
+  }
 
   ngOnInit(): void {
     // Récupération des info contenu dans le token (décriptée)
@@ -49,6 +63,10 @@ export class DashboardComponent implements OnInit {
         this._petService.getPetByOwner(auth_meta_object.Id).subscribe({
           next: (data) => {
             Object.assign(this.pets, data);
+            this.pets.forEach((pet) => {
+              pet.isEdit = false;
+            });
+            console.log(this.pets);
             this.pets.map((pet) => {
               this.formattingDate(pet.birthDate);
             });
@@ -91,17 +109,10 @@ export class DashboardComponent implements OnInit {
       if (
         confirm('Êtes-vous sur de vouloir supprimer le compte de ' + nickname)
       ) {
-        // let auth_meta_json = localStorage.getItem('auth_meta');
-        // let auth_meta_object = JSON.parse(auth_meta_json);
         this._petService.deletePet(id).subscribe({
           next: () => {
             this.showSuccessAlert();
             window.location.reload();
-            // this._petService.getPetByOwner(auth_meta_object.Id).subscribe({
-            //   next: (data) => {
-            //     Object.assign(this.pets, data);
-            //   },
-            // });
           },
           error: () => {
             this.errorAlertBox();
@@ -111,14 +122,20 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  editPet(): boolean {
-    if (this.isEdited) {
-      this.isEdited = false;
+  editPet(pet: Pet): boolean {
+    if (pet.isEdit) {
+      this.submitModification();
+      pet.isEdit = false;
     } else {
-      this.isEdited = true;
+      pet.isEdit = true;
     }
-    console.log(this.isEdited);
-    return this.isEdited;
+    return pet.isEdit;
+  }
+
+  submitModification() {
+    Object.assign(this.petToEdit, this.editForm.value);
+    console.log(this.editForm.value);
+    this.isEdited = false;
   }
 
   showSuccessAlert(): void {
