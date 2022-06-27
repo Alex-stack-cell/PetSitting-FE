@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -18,7 +18,10 @@ import { TokenInterceptor } from './Interceptors/token-interceptor.interceptor';
 import { FormErrorComponent } from './components/form-error/form-error.component';
 import { InfoIconComponent } from './components/info-icon/info-icon.component';
 import { AddAnimalComponent } from './edit/owner/add-animal/add-animal.component';
-
+import { registerLocaleData } from '@angular/common';
+import localFr from '@angular/common/locales/fr';
+import { NotfoundComponent } from './components/notfound/notfound.component';
+registerLocaleData(localFr);
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,6 +36,7 @@ import { AddAnimalComponent } from './edit/owner/add-animal/add-animal.component
     FormErrorComponent,
     InfoIconComponent,
     AddAnimalComponent,
+    NotfoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,6 +48,7 @@ import { AddAnimalComponent } from './edit/owner/add-animal/add-animal.component
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    { provide: LOCALE_ID, useValue: 'fr-FR' },
   ],
   bootstrap: [AppComponent],
 })

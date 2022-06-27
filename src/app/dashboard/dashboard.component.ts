@@ -5,7 +5,7 @@ import { PetService } from '../services/PetService/pet.service';
 import { OwnerService } from '../services/OwnerService/owner.service';
 import { PetSitterService } from '../services/PetSitterService/pet-sitter.service';
 import Swal from 'sweetalert2';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
@@ -28,6 +28,7 @@ export class DashboardComponent implements OnInit {
   auth_meta_json?: string = localStorage.getItem('auth_meta');
 
   constructor(
+    private _activatedRoute: ActivatedRoute,
     private _ownerService: OwnerService,
     private _petSitterService: PetSitterService,
     private _petService: PetService,
@@ -61,6 +62,15 @@ export class DashboardComponent implements OnInit {
             this.formattingDate(this.user.birthDate);
           },
         });
+
+        // ne fonctionne pas
+        // this._activatedRoute.data.subscribe((response: any) => {
+        //   this.pets = response.pets;
+        //   this.pets.forEach((pet) => {
+        //     pet.isEdit = false;
+        //   });
+        // });
+
         this._petService.getPetByOwner(auth_meta_object.Id).subscribe({
           next: (data) => {
             Object.assign(this.pets, data);
@@ -68,9 +78,6 @@ export class DashboardComponent implements OnInit {
               pet.isEdit = false;
             });
             console.log(this.pets);
-            this.pets.map((pet) => {
-              this.formattingDate(pet.birthDate);
-            });
           },
         });
       } else if (isOwner == false) {
@@ -113,10 +120,6 @@ export class DashboardComponent implements OnInit {
         this._petService.deletePet(id).subscribe({
           next: () => {
             this.showSuccessAlert();
-            window.location.reload();
-          },
-          error: () => {
-            this.errorAlertBox();
           },
         });
       }
@@ -149,11 +152,6 @@ export class DashboardComponent implements OnInit {
       response.subscribe({
         next: (data) => {
           this.petToEdit = data;
-          console.log(this.petToEdit);
-          window.location.reload();
-        },
-        error: () => {
-          this.errorAlertBox();
         },
       });
     }
@@ -161,9 +159,5 @@ export class DashboardComponent implements OnInit {
 
   showSuccessAlert(): void {
     Swal.fire('Vous avez bien supprimer le compte  🥳');
-  }
-
-  errorAlertBox() {
-    Swal.fire('Oops', 'Une erreur est survenue.💥', 'error');
   }
 }

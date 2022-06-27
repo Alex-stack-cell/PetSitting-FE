@@ -6,8 +6,8 @@
         <li>Identifiant: {{ user.id }}</li>
         <li>Nom de famille: {{ user.lastName }}</li>
         <li>Prénom: {{ user.firstName }}</li>
-        <li>Email: {{ user.email }}</li>
         <li>Date de naissance: {{ this.birthDate }}</li>
+        <li>Email: {{ user.email }}</li>
         <li *ngIf="!user.Owner">Préfèrence : {{ user.petPreference }}</li>
         <li>
           Score:
@@ -117,7 +117,9 @@
                       type="text"
                     />
                   </td>
-                  <td *ngIf="!pet.isEdit">{{ pet.birthDate }}</td>
+                  <td *ngIf="!pet.isEdit">
+                    {{ pet.birthDate | date: "longDate" }}
+                  </td>
                   <td *ngIf="pet.isEdit">
                     <input
                       *ngIf="pet.isEdit"
@@ -125,6 +127,7 @@
                       [ngModel]="pet.birthDate"
                       [required]="true"
                       type="date"
+                      [value]="pet.birthDate"
                     />
                   </td>
                   <td>
