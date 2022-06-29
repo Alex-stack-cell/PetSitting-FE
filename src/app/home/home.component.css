@@ -1,10 +1,26 @@
 #showcase {
-  background-image: url("https://images.unsplash.com/photo-1561037404-61cd46aa615b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80");
+  background: linear-gradient(
+      rgba(238, 174, 202, 0.6),
+      rgba(148, 187, 233, 0.6)
+    ),
+    url("https://images.unsplash.com/photo-1561037404-61cd46aa615b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 0% 35%;
 }
 
-#showcase,
-p {
+#showcase-content {
   color: #fff;
+}
+
+#showcase-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+#showcase-wrapper > a {
+  margin: 12px 12px 0 0;
 }
 
 #btn-plain:hover {
@@ -21,21 +37,118 @@ span {
   background-color: #fff;
   color: #6c757d;
   border-radius: 25px;
-  padding: 8px;
+  padding: 8px 20px 8px 20px;
   text-align: center;
-  width: 10%;
-  position: absolute;
-  top: 78%;
-  left: 50%;
   transform: translate(-50%, 50%);
   font-style: none;
   text-decoration: none;
+  cursor: pointer;
+  margin: auto;
 }
 
 #more:active {
   border: none;
 }
 
-#cards {
-  margin-top: 7%;
+.center {
+  text-align: center;
+}
+
+.wrapper {
+  margin: 2% 0 0 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+#pet-sitting {
+  background-color: rgb(245, 245, 246);
+}
+
+.wrapper > button {
+  margin-bottom: 2%;
+}
+
+#ownerService,
+#sitterService {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+#ownerService {
+  margin-top: 2%;
+}
+
+#sitterService {
+  margin-top: 5%;
+}
+
+#owner,
+#petSitter {
+  height: 300px;
+  margin-right: 22px;
+  margin-left: 22px;
+  border-radius: 5%;
+}
+
+.v-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-end {
+  align-self: flex-end;
+}
+
+.flex-start {
+  align-self: flex-start;
+}
+
+#reviews {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+app-card {
+  background-color: rgb(245, 245, 246);
+  font-weight: 600;
+}
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  #showcase {
+    background-position: 65% 55%;
+  }
+
+  .btn {
+    font-size: 80%;
+    text-align: center;
+    margin: auto;
+  }
+
+  #showcase-wrapper {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .wrapper > .btn {
+    margin: 10px;
+  }
+
+  #ownerService {
+    margin-top: 2%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+
+  #owner {
+    display: none;
+    border-radius: 5%;
+  }
 }

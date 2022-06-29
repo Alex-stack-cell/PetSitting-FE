@@ -6,8 +6,8 @@ import { OwnerService } from '../services/OwnerService/owner.service';
 import { PetSitterService } from '../services/PetSitterService/pet-sitter.service';
 import Swal from 'sweetalert2';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormBuilder, FormsModule } from '@angular/forms';
-import { PetForm } from '../Models/Forms/PetForm';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { AuthService } from '../services/AuthService/auth-service.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -27,36 +27,34 @@ export class DashboardComponent implements OnInit {
   nbFullStar: number[] = Array(5); // nombre d'étoile pleine
   categories: string[] = ['Chien', 'Chat', 'Lapin', 'Gerbille', 'Tortue'];
   auth_meta_json?: string = localStorage.getItem('auth_meta');
-  petForm = new PetForm('', '', '', new Date());
+  auth_meta_object?: object = {};
 
   constructor(
     private _activatedRoute: ActivatedRoute,
     private _ownerService: OwnerService,
     private _petSitterService: PetSitterService,
     private _petService: PetService,
-    private _router: Router,
-    private _fb: FormBuilder
+    private _fb: FormBuilder,
+    private _router: Router
   ) {
-    // this.editForm = _fb.group({
-    //   nickName: [null],
-    //   type: [null],
-    //   breed: [null],
-    //   birthDate: [null],
-    // });x
+    this.editForm = _fb.group({
+      nickName: [null],
+      type: [null],
+      breed: [null],
+      birthDate: [null],
+    });
     this.petToEdit.isEdit = false;
   }
 
   ngOnInit(): void {
     // Récupération des info contenu dans le token (décriptée)
-    // let auth_meta_json = localStorage.getItem('auth_meta');
-    // let auth_tkn = localStorage.getItem('auth_tkn');
     // Si le contenu n'est pas vide accéder au information de l'utilisateur selon son profile
     if (this.auth_meta_json) {
-      let auth_meta_object = JSON.parse(this.auth_meta_json);
-      let isOwner = auth_meta_object.Owner;
+      this.auth_meta_object = JSON.parse(this.auth_meta_json);
+      let isOwner = this.auth_meta_object['Owner'];
       // Si le compte est un propriétaire alors on appel le controlleur du Owner
       if (isOwner == true) {
-        this._ownerService.getOwnerInfo(auth_meta_object.Id).subscribe({
+        this._ownerService.getOwnerInfo(this.auth_meta_object['Id']).subscribe({
           next: (data) => {
             this.user = data; // enregistrer les données du token
             this.user.Owner = isOwner;
@@ -64,39 +62,35 @@ export class DashboardComponent implements OnInit {
           },
         });
 
-        this._petService.getPetByOwner(auth_meta_object.Id).subscribe({
+        // ne fonctionne pas
+        // this._activatedRoute.data.subscribe((response: any) => {
+        //   this.pets = response.pets;
+        //   this.pets.forEach((pet) => {
+        //     pet.isEdit = false;
+        //   });
+        // });
+
+        this._petService.getPetByOwner(this.auth_meta_object['Id']).subscribe({
           next: (data) => {
             Object.assign(this.pets, data);
-            Object.assign(this.petForm, data);
-            console.log(this.petForm);
             this.pets.forEach((pet) => {
               pet.isEdit = false;
             });
-            console.log(this.pets);
           },
         });
       } else if (isOwner == false) {
         // Si le compte est un petsitter alors on appel le controlleur du PetSitter
-        this._petSitterService.getPetSitterInfo(auth_meta_object.Id).subscribe({
-          next: (data) => {
-            this.user = data;
-            this.user.Owner = isOwner;
-            this.assigningStar();
-          },
-        });
+        this._petSitterService
+          .getPetSitterInfo(this.auth_meta_object['Id'])
+          .subscribe({
+            next: (data) => {
+              this.user = data;
+              this.user.Owner = isOwner;
+              this.assigningStar();
+            },
+          });
       }
     }
-  }
-
-  //Formatte la date en JJ/MM/AAAA => Pas nécessaire car on a les pipes
-  formattingDate(userDate: Date | undefined) {
-    if (userDate != undefined) this.birthDate = userDate.toString();
-    this.birthDate =
-      this.birthDate?.substring(8, 10) +
-      '/' +
-      this.birthDate?.substring(5, 7) +
-      '/' +
-      this.birthDate?.substring(0, 4);
   }
 
   assigningStar() {
@@ -114,6 +108,8 @@ export class DashboardComponent implements OnInit {
         this._petService.deletePet(id).subscribe({
           next: () => {
             this.showSuccessAlert();
+            // a changer car ne respecte pas la philosophie reactive d'angular
+            window.location.reload();
           },
         });
       }
@@ -131,22 +127,39 @@ export class DashboardComponent implements OnInit {
   }
 
   submitModification(id: number | null): void {
-    Object.assign(this.petToEdit, this.petForm);
-    // Object.assign(this.petToEdit, this.editForm.value);
-    this.isEdited = false;
-    this.petToEdit.iD_Owner = this.petToEdit.id = id;
-    if (this.auth_meta_json) {
-      let auth_meta_object = JSON.parse(this.auth_meta_json);
-      this.petToEdit.iD_Owner = auth_meta_object.Id;
+    if (id == null) {
+      this._petService.getPetByOwner(this.auth_meta_object['Id']);
+      return;
     }
+    Object.assign(this.petToEdit, this.editForm.value);
+    this.isEdited = false;
+
+    this.petToEdit.id = id;
+    if (this.auth_meta_object != undefined) {
+      this.petToEdit.iD_Owner = this.auth_meta_object['Id'];
+    }
+
     let response = this._petService.updatePet(
       this.petToEdit.id,
       this.petToEdit
     );
+
     if (response != null) {
       response.subscribe({
         next: (data) => {
           this.petToEdit = data;
+          this._petService
+            .getPetByOwner(JSON.parse(this.auth_meta_json).Id)
+            .subscribe({
+              next: (data) => {
+                Object.assign(this.pets, data);
+                this.pets.forEach((pet) => {
+                  pet.isEdit = false;
+                });
+              },
+            });
+          // a changer car ne respecte pas la philosophie reactive d'angular
+          window.location.reload();
         },
       });
     }

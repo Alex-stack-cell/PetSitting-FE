@@ -3,35 +3,94 @@
     <h1 class="display-5 fw-bold">
       Pet Sitting en toute <span>confiance</span>
     </h1>
-    <p class="col-md-8 fs-4">
-      Vous partez en vacances, ou en voyage d'affaire ?
-    </p>
-    <p class="col-md-8 fs-4">
-      Trouvez des pet-sitters vérifiés pour vos animaux de compagnie durant
-      votre absence.
-    </p>
-    <a routerLink="" class="btn btn-secondary btn-lg m-2" id="btn-plain"
-      >Trouver un pet-sitter</a
-    >
-    <a routerLink="" class="btn btn btn-outline-secondary btn-lg"
-      >Trouver un pet-sitting</a
-    >
+    <div id="showcase-content">
+      <p class="col-md-8 fs-4">
+        Vous partez en vacances, ou en voyage d'affaire ?
+      </p>
+      <p class="col-md-8 fs-4">
+        Trouvez des pet-sitters vérifiés pour vos animaux de compagnie durant
+        votre absence.
+      </p>
+    </div>
+    <div id="showcase-wrapper">
+      <a routerLink="" class="btn btn-secondary btn-lg" id="btn-plain"
+        >Trouver un pet-sitter</a
+      >
+      <a routerLink="" class="btn btn btn-outline-secondary btn-lg"
+        >Trouver un pet-sitting</a
+      >
+    </div>
   </div>
-  <a id="more" href="#info">
-    Plus <i class="fa fa-angle-down" aria-hidden="true"></i
-  ></a>
 </div>
-<div id="cards">
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis quam aut,
-  voluptas cupiditate fuga consequatur repellat debitis dolore aspernatur
-  temporibus maiores, neque quae magni veritatis rem porro, aliquid
-  necessitatibus unde aliquam ipsum libero quibusdam laudantium modi
-  accusantium? Unde, atque reiciendis, iste dignissimos molestiae quas numquam
-  sed, nobis quis ullam repudiandae officiis neque quisquam ducimus omnis magnam
-  earum! Tempora et, animi nobis culpa ipsum totam voluptate optio quo aliquid
-  quaerat dolore est molestiae similique, unde amet nisi ex perferendis ratione
-  magni neque! Fugit deleniti sunt aperiam natus quaerat laborum dolores<span
-    id="info"
-    >est</span
-  >. Dolorem accusamus ratione aut cupiditate earum saepe qui corporis soluta!
+<div class="position-relative">
+  <div class="position-absolute bottom-0 start-50 translate-middle">
+    <a id="more" href="#cards_section">
+      Plus <i class="fa fa-angle-down" aria-hidden="true"></i
+    ></a>
+  </div>
+</div>
+<div class="container">
+  <h2 class="center">Rejoignez notre communauté !</h2>
+  <app-cards></app-cards>
+</div>
+<div id="pet-sitting">
+  <div class="container">
+    <h2 class="center">Essayez dès maintenant !</h2>
+    <div class="wrapper">
+      <button class="btn btn-primary">Trouver un pet-sitter</button
+      ><i class="fa fa-paw" aria-hidden="true"></i>
+      <button class="btn btn-primary">Trouver un pet-sitting</button>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div id="ownerService">
+    <div class="v-wrapper">
+      <h3>Vous souhaitez faire du pet-sitting ?</h3>
+      <p>
+        Découvrez de nouveaux endroits dans le monde, tout en profitant de la
+        chaleureux compagnie d'animaux.
+      </p>
+      <button class="btn btn-outline-secondary flex-end">
+        Trouver un pet-sitting
+      </button>
+    </div>
+    <img
+      src="https://images.unsplash.com/photo-1557495235-340eb888a9fb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTh8fHBldHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
+      alt="owner"
+      id="owner"
+    />
+  </div>
+</div>
+<div class="container">
+  <div id="sitterService">
+    <img
+      src="https://images.unsplash.com/photo-1521247560470-d2cbfe2f7b47?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+      alt="pet-sitter"
+      id="petSitter"
+    />
+    <div class="v-wrapper">
+      <h3>Besoin d'un pet-sitter ?</h3>
+      <p>
+        Venez trouver des pet-sitters qui seront heureux de prendre en charge
+        vos animaux de compagnies.
+      </p>
+      <button class="btn btn-outline-secondary flex-start">
+        Trouver un pet-sitter
+      </button>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div id="reviews">
+    <h3>Ce que nos clients disent de nous ...</h3>
+    <i class="fa fa-quote-left" aria-hidden="true"></i>
+    <app-card
+      src=""
+      alt=""
+      cardTitle="J'adore !"
+      cardContent="Ce que j'adore avec pet-sitting, c'est que leur équipe est toujours disponible à la moindre demande. 
+      C3Po sur TrustPilot"
+    ></app-card>
+  </div>
 </div>

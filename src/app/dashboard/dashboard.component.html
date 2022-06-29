@@ -59,8 +59,7 @@
           Vous pouvez à tout moment modifier les informations de votre animal de
           compagnie
         </p>
-
-        <form #it="ngForm" (ngSubmit)="submitModification(null)">
+        <form [formGroup]="editForm" (ngSubmit)="submitModification(null)">
           <div class="table-responsive">
             <table
               *ngIf="user.Owner == true && pets.length > 0"
@@ -76,15 +75,15 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let pet of pets; let i; as: index">
+                <tr *ngFor="let pet of pets">
                   <td *ngIf="!pet.isEdit">{{ pet.nickName }}</td>
                   <td *ngIf="pet.isEdit">
                     <input
+                      formControlName="nickName"
                       pattern="[a-zA-Z]+[\s|-]?[a-zA-Z]+[\s|-]?[a-zA-Z]+$"
                       [required]="true"
-                      [(ngModel)]="petForm[2].nickName"
-                      [value]="petForm.nickName"
-                      name="nickName"
+                      [ngModel]="pet.nickName"
+                      type="text"
                     />
                   </td>
                   <td *ngIf="!pet.isEdit">{{ pet.type }}</td>
@@ -92,9 +91,8 @@
                     <select
                       class="form-select"
                       aria-label="default select example"
-                      [(ngModel)]="petForm.type"
+                      formControlName="type"
                       [required]="true"
-                      name="type"
                     >
                       <option selected ngValue="null" disabled>
                         Choisissez une catégorie.
@@ -112,19 +110,21 @@
                     <input
                       class="table"
                       *ngIf="pet.isEdit"
-                      [(ngModel)]="pet.breed"
+                      formControlName="breed"
+                      [ngModel]="pet.breed"
                       pattern="[a-zA-Z]+[\s|-]?[a-zA-Z]+[\s|-]?[a-zA-Z]+$"
                       [required]="true"
                       type="text"
                     />
                   </td>
                   <td *ngIf="!pet.isEdit">
-                    {{ petForm.birthDate | date: "longDate" }}
+                    {{ pet.birthDate | date: "longDate" }}
                   </td>
                   <td *ngIf="pet.isEdit">
                     <input
                       *ngIf="pet.isEdit"
-                      [(ngModel)]="pet.birthDate"
+                      formControlName="birthDate"
+                      [ngModel]="pet.birthDate"
                       [required]="true"
                       type="date"
                       [value]="pet.birthDate"
@@ -145,6 +145,7 @@
                       aria-hidden="true"
                       (click)="deletePet(pet.nickName, pet.id)"
                     ></button>
+
                     <button
                       class="fa fa-check btn"
                       *ngIf="pet.isEdit == true"

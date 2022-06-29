@@ -21,6 +21,8 @@ import { AddAnimalComponent } from './edit/owner/add-animal/add-animal.component
 import { registerLocaleData } from '@angular/common';
 import localFr from '@angular/common/locales/fr';
 import { NotfoundComponent } from './components/notfound/notfound.component';
+import { CardComponent } from './components/card/card.component';
+import { CardsComponent } from './components/cards-wrapper/cards.component';
 registerLocaleData(localFr);
 @NgModule({
   declarations: [
@@ -37,6 +39,8 @@ registerLocaleData(localFr);
     InfoIconComponent,
     AddAnimalComponent,
     NotfoundComponent,
+    CardComponent,
+    CardsComponent,
   ],
   imports: [
     BrowserModule,
