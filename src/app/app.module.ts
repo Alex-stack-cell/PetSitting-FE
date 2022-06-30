@@ -23,6 +23,7 @@ import localFr from '@angular/common/locales/fr';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import { CardComponent } from './components/card/card.component';
 import { CardsComponent } from './components/cards-wrapper/cards.component';
+import { FooterComponent } from './footer/footer.component';
 registerLocaleData(localFr);
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ registerLocaleData(localFr);
     NotfoundComponent,
     CardComponent,
     CardsComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

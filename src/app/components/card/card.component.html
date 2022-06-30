@@ -1,9 +1,18 @@
 <div class="wrapper">
   <div class="cards" id="cards_section">
-    <img *ngIf="src != ''" class="cards-img" src="{{ src }}" alt="{{ alt }}" />
+    <img
+      *ngIf="imgSrc != ''"
+      class="cards-img"
+      src="{{ imgSrc }}"
+      alt="{{ alt }}"
+    />
+    <i *ngIf="cardIcon != null" class="{{ cardIcon }}" aria-hidden="true"></i>
     <h3 class="my-3 card-title">{{ cardTitle }}</h3>
     <p class="card-content">
       {{ cardContent }}
     </p>
+    <div *ngIf="cardFooter != null" class="card-footer">
+      <small class="text-muted">De: {{ cardFooter }}</small>
+    </div>
   </div>
 </div>

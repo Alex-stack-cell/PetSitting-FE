@@ -26,3 +26,8 @@
 .card-content {
   text-align: center;
 }
+
+.card-footer {
+  background-color: inherit;
+  border-top: none;
+}

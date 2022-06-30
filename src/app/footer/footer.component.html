@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="b-example-divider my-4 border-top"></div>
+  <footer class="py-1">
+    <!-- Section Aide - À propos - Légale -->
+    <div class="row">
+      <div *ngFor="let item of footerOne" class="col-6 col-md-2 mb-3">
+        <h5>{{ item.sectionTitle }}</h5>
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2">
+            <a
+              *ngFor="let content of item.section; let i = index"
+              class="nav-link p-0 text-muted"
+              href="{{ content['link'] }}"
+              >{{ content["title"] }}</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- Réseaux sociaux -->
+    <div class="b-example-divider border-top"></div>
+    <div
+      *ngFor="let item of footerTwo"
+      class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4"
+    >
+      <p>{{ item.copyright }}</p>
+      <ul class="list-unstyled d-flex">
+        <li class="ms-3" *ngFor="let icon of item.socialIcons">
+          <a class="link-dark" href="{{ icon['link'] }}"
+            ><i class="{{ icon['icon'] }}" aria-hidden="true"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </footer>
+</div>
