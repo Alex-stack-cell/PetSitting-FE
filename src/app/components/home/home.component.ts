@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CardsComponent } from '../components/cards-wrapper/cards.component';
+import { CardsComponent } from '../cards-wrapper/cards.component';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',

@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '../Models/Account/User';
-import { Pet } from '../Models/pet';
-import { PetService } from '../services/PetService/pet.service';
-import { OwnerService } from '../services/OwnerService/owner.service';
-import { PetSitterService } from '../services/PetSitterService/pet-sitter.service';
+import { User } from '../../Models/Account/User';
+import { Pet } from '../../Models/pet';
+import { PetService } from '../../services/PetService/pet.service';
+import { OwnerService } from '../../services/OwnerService/owner.service';
+import { PetSitterService } from '../../services/PetSitterService/pet-sitter.service';
 import Swal from 'sweetalert2';
-import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { AuthService } from '../services/AuthService/auth-service.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,8 +15,11 @@ import { AuthService } from '../services/AuthService/auth-service.service';
 })
 export class DashboardComponent implements OnInit {
   user?: User;
+  deletionConfirmed: boolean = false;
+  editionConfirmed: boolean = false;
   isEdited: boolean = false;
   pets?: Pet[] = Array();
+  petId: number = null;
   petToEdit: Pet = new Pet();
   birthDate?: string;
   editForm?: FormGroup;
@@ -30,12 +32,10 @@ export class DashboardComponent implements OnInit {
   auth_meta_object?: object = {};
 
   constructor(
-    private _activatedRoute: ActivatedRoute,
     private _ownerService: OwnerService,
     private _petSitterService: PetSitterService,
     private _petService: PetService,
-    private _fb: FormBuilder,
-    private _router: Router
+    private _fb: FormBuilder
   ) {
     this.editForm = _fb.group({
       nickName: [null],
@@ -54,6 +54,8 @@ export class DashboardComponent implements OnInit {
       let isOwner = this.auth_meta_object['Owner'];
       // Si le compte est un propriétaire alors on appel le controlleur du Owner
       if (isOwner == true) {
+        this.petToEdit.iD_Owner = this.auth_meta_object['Id'];
+        // console.log(this.petToEdit.iD_Owner);
         this._ownerService.getOwnerInfo(this.auth_meta_object['Id']).subscribe({
           next: (data) => {
             this.user = data; // enregistrer les données du token
@@ -101,15 +103,17 @@ export class DashboardComponent implements OnInit {
   }
 
   deletePet(nickname: string, id: number) {
-    if (id != undefined && nickname != undefined) {
+    if (id != null && nickname != undefined) {
       if (
         confirm('Êtes-vous sur de vouloir supprimer le compte de ' + nickname)
       ) {
         this._petService.deletePet(id).subscribe({
           next: () => {
+            console.log(id);
             this.showSuccessAlert();
             // a changer car ne respecte pas la philosophie reactive d'angular
             window.location.reload();
+            this.ngOnInit();
           },
         });
       }
@@ -127,10 +131,9 @@ export class DashboardComponent implements OnInit {
   }
 
   submitModification(id: number | null): void {
-    if (id == null) {
-      this._petService.getPetByOwner(this.auth_meta_object['Id']);
-      return;
-    }
+    // if (id == null) {
+    //   this.ngOnInit();
+    // }
     Object.assign(this.petToEdit, this.editForm.value);
     this.isEdited = false;
 

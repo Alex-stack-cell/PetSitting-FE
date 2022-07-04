@@ -1,32 +1,34 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { User } from 'src/app/Models/Account/User';
-import { OwnerService } from 'src/app/services/OwnerService/owner.service';
-import { BaseUserForm } from 'src/app/Forms/baseUserForm';
-import Swal from 'sweetalert2';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { User } from 'src/app/Models/Account/User';
+import { BaseUserForm } from 'src/app/components/Forms/baseUserForm';
+import { PetSitterService } from 'src/app/services/PetSitterService/pet-sitter.service';
+import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-owner',
-  templateUrl: './owner.component.html',
-  styleUrls: ['./owner.component.css'],
+  selector: 'app-pet-sitter',
+  templateUrl: './pet-sitter.component.html',
+  styleUrls: ['./pet-sitter.component.css'],
 })
-export class OwnerComponent implements OnInit {
+export class PetSitterComponent implements OnInit {
   auth_meta_json = localStorage.getItem('auth_meta');
   editForm: FormGroup;
-  ownerToEdit: User = new User();
+  petSitterToEdit: User = new User();
+  pets: string[] = ['Chien', 'Chat', 'Lapin', 'Gerbille', 'Tortue'];
+
   constructor(
     private _fb: FormBuilder,
-    private _ownerService: OwnerService,
+    private _petSitterService: PetSitterService,
     private _router: Router
   ) {
-    this.editForm = _fb.group({ ...BaseUserForm });
+    this.editForm = _fb.group({ ...BaseUserForm, petPreference: [null] });
 
-    this._ownerService
-      .getOwnerInfo(JSON.parse(this.auth_meta_json).Id)
+    this._petSitterService
+      .getPetSitterInfo(JSON.parse(this.auth_meta_json).Id)
       .subscribe((data) => {
         this.editForm.patchValue(data);
-        Object.assign(this.ownerToEdit, data);
+        Object.assign(this.petSitterToEdit, data);
       });
   }
 
@@ -36,16 +38,16 @@ export class OwnerComponent implements OnInit {
     if (this.editForm.invalid) {
       alert('Veuillez remplir le formulaire, svp.');
     }
-    Object.assign(this.ownerToEdit, this.editForm.value);
+    Object.assign(this.petSitterToEdit, this.editForm.value);
 
-    let response = this._ownerService.updateOwner(
-      this.ownerToEdit,
-      this.ownerToEdit.id
+    let response = this._petSitterService.updatePetSitterInfo(
+      this.petSitterToEdit,
+      this.petSitterToEdit.id
     );
     if (response != null) {
       response.subscribe({
         next: (data) => {
-          this.ownerToEdit = data;
+          this.petSitterToEdit = data;
           this.showSuccessAlert();
           this._router.navigate(['/dashboard']);
         },
@@ -59,11 +61,12 @@ export class OwnerComponent implements OnInit {
   // Vérifie la cohérence du mdp modifié
   checkPassword(fg: FormGroup) {
     if (
-      fg.get('ownerPasswd')?.value != '' &&
-      fg.get('confirmOwnerPasswd')?.value != ''
+      fg.get('petSitterPasswd')?.value != '' &&
+      fg.get('confirmPetSitterPasswd')?.value != ''
     ) {
       if (
-        fg.get('ownerPasswd')?.value !== fg.get('confirmOwnerPasswd')?.value
+        fg.get('petSitterPasswd')?.value !==
+        fg.get('confirmPetSitterPasswd')?.value
       ) {
         return { password: true };
       } else return null;

@@ -31,7 +31,8 @@ export class OwnerService {
     owner: User,
     id: number | undefined
   ): Observable<any> | undefined {
-    return this._http.put(this._updateOwner + id, owner);
+    let response = this._http.put(this._updateOwner + id, owner);
+    return response;
   }
 
   handleError(error: HttpErrorResponse) {

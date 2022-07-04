@@ -1,0 +1,100 @@
+<div class="container m-2">
+  <div class="py-5 text-center">
+    <h2>Mettre à jour mon compte</h2>
+    <p class="lead">
+      Veuillez renseigner les informations ci-dessous pour mettre à jour votre
+      compte
+    </p>
+  </div>
+  <div class="row g-5">
+    <div class="col-md-5 col-lg-4 order-md-last">
+      <img
+        src="https://images.unsplash.com/photo-1592194996308-7b43878e84a6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+        alt="update_account"
+        class="img-fluid rounded"
+      />
+    </div>
+    <div class="col-md-7 col-lg-8">
+      <h4>
+        Mon compte
+        <span class="badge bg-primary rounded-pill"
+          ><i class="fa fa-address-card" aria-hidden="true"></i>
+        </span>
+      </h4>
+      <form (ngSubmit)="onSubmit()" [formGroup]="editForm">
+        <div class="mb-3">
+          <label for="lastName" class="form-label">Nom de famille</label>
+          <input
+            type="text"
+            class="form-control"
+            id="lastName"
+            formControlName="lastName"
+            pattern="[a-zA-Z]+[\s|-]?[a-zA-Z]+[\s|-]?[a-zA-Z]+$"
+            placeholder="Doe"
+            [required]="true"
+          />
+          <app-form-error
+            [control]="editForm.get('lastName')"
+            patternMessage="Le nom est invalide."
+            requiredMessage="Veuillez remplir le champ nom."
+          ></app-form-error>
+        </div>
+        <div class="mb-3">
+          <label for="firstName" class="form-label">Prénom</label>
+          <input
+            type="text"
+            class="form-control"
+            id="firstName"
+            formControlName="firstName"
+            pattern="[a-zA-Z]+[\s|-]?[a-zA-Z]+[\s|-]?[a-zA-Z]+$"
+            placeholder="John"
+            [required]="true"
+          />
+          <app-form-error
+            [control]="editForm.get('firstName')"
+            patternMessage="Le prénom est invalide."
+            requiredMessage="Veuillez remplir le champ pour le prénom"
+          ></app-form-error>
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            placeholder="johnDoe@email.com"
+            [required]="true"
+            formControlName="email"
+          />
+          <app-form-error
+            [control]="editForm.get('email')"
+            patternMessage="L'email est invalide."
+            requiredMessage="Veuillez remplir le champ pour l'email"
+          ></app-form-error>
+        </div>
+        <div class="mb-3">
+          <label for="types" class="form-label">Préférence</label>
+          <select
+            class="form-select"
+            aria-label="default select example"
+            formControlName="petPreference"
+            [required]="true"
+          >
+            <option selected ngValue="null" disabled>
+              Choisissez une catégorie.
+            </option>
+            <option *ngFor="let item of pets" [value]="item">{{ item }}</option>
+          </select>
+        </div>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="!editForm.valid"
+        >
+          Envoyer
+        </button>
+        <a class="btn btn-secondary m-2" routerLink="/dashboard">Retour</a>
+      </form>
+    </div>
+  </div>
+</div>

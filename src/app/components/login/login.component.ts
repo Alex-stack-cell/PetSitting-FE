@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Owner } from '../Models/owner';
+import { Owner } from '../../Models/owner';
 import { Router } from '@angular/router';
-import { AuthService } from '../services/AuthService/auth-service.service';
-import { UserLogin } from '../Models/userLogin';
+import { AuthService } from '../../services/AuthService/auth-service.service';
+import { UserLogin } from '../../Models/userLogin';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -40,7 +40,6 @@ export class LoginComponent implements OnInit {
       this.userLogin.passwd = values.userPwd;
       this._authService.login(this.userLogin).subscribe({
         next: () => {
-          console.log(this._authService.getUserName());
           this.showSuccessAlert();
           this._router.navigateByUrl('/');
         },

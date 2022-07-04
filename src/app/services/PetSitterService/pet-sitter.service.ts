@@ -12,7 +12,10 @@ export class PetSitterService {
 
   //live date
   private _addPetSitter: string = 'http://localhost:5000/api/PetSitter';
-  private _getPetSitter = 'http://localhost:5000/api/PetSitter/dashboard/';
+  private _getPetSitter: string =
+    'http://localhost:5000/api/PetSitter/dashboard/';
+  private _updatePetSitter: string =
+    'http://localhost:5000/api/PetSitter/update/';
 
   constructor(private _http: HttpClient) {}
 
@@ -22,6 +25,11 @@ export class PetSitterService {
 
   getPetSitterInfo(id: number): Observable<User> {
     let response = this._http.get(this._getPetSitter + id);
+    return response;
+  }
+
+  updatePetSitterInfo(petSitter: User, id: number): Observable<User> {
+    let response = this._http.put(this._updatePetSitter + id, petSitter);
     return response;
   }
 }
