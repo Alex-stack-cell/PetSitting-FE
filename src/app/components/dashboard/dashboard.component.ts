@@ -5,8 +5,6 @@ import { PetService } from '../../services/PetService/pet.service';
 import { OwnerService } from '../../services/OwnerService/owner.service';
 import { PetSitterService } from '../../services/PetSitterService/pet-sitter.service';
 import Swal from 'sweetalert2';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,14 +13,8 @@ import { Observable } from 'rxjs';
 })
 export class DashboardComponent implements OnInit {
   user?: User;
-  deletionConfirmed: boolean = false;
-  editionConfirmed: boolean = false;
-  isEdited: boolean = false;
   pets?: Pet[] = Array();
-  petId: number = null;
   petToEdit: Pet = new Pet();
-  birthDate?: string;
-  editForm?: FormGroup;
   scoreBoard: number[] = Array(5); // permet d'afficher les étoiles associés aux scores
   userScore: number = 0;
   nbEmptyStar: number[] = Array(5); // nombre d'étoile vide
@@ -34,15 +26,8 @@ export class DashboardComponent implements OnInit {
   constructor(
     private _ownerService: OwnerService,
     private _petSitterService: PetSitterService,
-    private _petService: PetService,
-    private _fb: FormBuilder
+    private _petService: PetService // private _fb: FormBuilder
   ) {
-    this.editForm = _fb.group({
-      nickName: [null],
-      type: [null],
-      breed: [null],
-      birthDate: [null],
-    });
     this.petToEdit.isEdit = false;
   }
 
@@ -55,7 +40,6 @@ export class DashboardComponent implements OnInit {
       // Si le compte est un propriétaire alors on appel le controlleur du Owner
       if (isOwner == true) {
         this.petToEdit.iD_Owner = this.auth_meta_object['Id'];
-        // console.log(this.petToEdit.iD_Owner);
         this._ownerService.getOwnerInfo(this.auth_meta_object['Id']).subscribe({
           next: (data) => {
             this.user = data; // enregistrer les données du token
@@ -63,14 +47,6 @@ export class DashboardComponent implements OnInit {
             this.assigningStar();
           },
         });
-
-        // ne fonctionne pas
-        // this._activatedRoute.data.subscribe((response: any) => {
-        //   this.pets = response.pets;
-        //   this.pets.forEach((pet) => {
-        //     pet.isEdit = false;
-        //   });
-        // });
 
         this._petService.getPetByOwner(this.auth_meta_object['Id']).subscribe({
           next: (data) => {
@@ -109,66 +85,51 @@ export class DashboardComponent implements OnInit {
       ) {
         this._petService.deletePet(id).subscribe({
           next: () => {
-            console.log(id);
             this.showSuccessAlert();
-            // a changer car ne respecte pas la philosophie reactive d'angular
-            window.location.reload();
             this.ngOnInit();
+            // window.location.reload();
           },
         });
       }
     }
   }
 
+  cancel(pet: Pet): boolean {
+    pet.isEdit = false;
+    return pet.isEdit;
+  }
+
   editPet(pet: Pet): boolean {
     if (pet.isEdit) {
-      this.submitModification(pet.id);
-      pet.isEdit = false;
+      this.petToEdit.id = pet.id;
+      Object.assign(this.petToEdit, pet);
     } else {
       pet.isEdit = true;
     }
     return pet.isEdit;
   }
 
-  submitModification(id: number | null): void {
-    // if (id == null) {
-    //   this.ngOnInit();
-    // }
-    Object.assign(this.petToEdit, this.editForm.value);
-    this.isEdited = false;
-
-    this.petToEdit.id = id;
-    if (this.auth_meta_object != undefined) {
-      this.petToEdit.iD_Owner = this.auth_meta_object['Id'];
-    }
-
-    let response = this._petService.updatePet(
-      this.petToEdit.id,
-      this.petToEdit
-    );
-
-    if (response != null) {
-      response.subscribe({
-        next: (data) => {
-          this.petToEdit = data;
-          this._petService
-            .getPetByOwner(JSON.parse(this.auth_meta_json).Id)
-            .subscribe({
-              next: (data) => {
-                Object.assign(this.pets, data);
-                this.pets.forEach((pet) => {
-                  pet.isEdit = false;
-                });
-              },
-            });
-          // a changer car ne respecte pas la philosophie reactive d'angular
-          window.location.reload();
-        },
-      });
+  savePet(pet: Pet): void {
+    if (pet.isEdit) {
+      let response = this._petService.updatePet(pet.id, pet);
+      if (response != null) {
+        response.subscribe({
+          next: () => {},
+          error: () => {
+            this.showErrorAlert();
+            this.ngOnInit();
+          },
+        });
+      }
+      pet.isEdit = false;
     }
   }
 
   showSuccessAlert(): void {
     Swal.fire('Vous avez bien supprimer le compte  🥳');
+  }
+
+  showErrorAlert(): void {
+    Swal.fire('Oops', "Erreur lors de l'envoie", 'error');
   }
 }

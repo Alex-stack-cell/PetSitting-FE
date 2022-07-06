@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { User } from 'src/app/Models/Account/User';
+import { PasswdUpdated } from 'src/app/Models/PasswdUpdated';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +17,7 @@ export class OwnerService {
   private _addOwner: string = 'http://localhost:5000/api/Owner';
   private _getOwner = 'http://localhost:5000/api/Owner/dashboard/';
   private _updateOwner = 'http://localhost:5000/api/Owner/update/';
+  private _updatePwdOwner = 'http://localhost:5000/api/Owner/';
 
   getOwnerInfo(id: number): Observable<User> {
     let response = this._http.get(this._getOwner + id);
@@ -33,6 +35,15 @@ export class OwnerService {
   ): Observable<any> | undefined {
     let response = this._http.put(this._updateOwner + id, owner);
     return response;
+  }
+
+  updatePasswd(passwdUpdated: PasswdUpdated): Observable<any> {
+    return this._http.put(this._updatePwdOwner + passwdUpdated.id, {
+      id: passwdUpdated.id,
+      currentPassword: passwdUpdated.currentPassword,
+      newPassword: passwdUpdated.newPassword,
+      confirmNewPassword: passwdUpdated.confirmNewPassword,
+    });
   }
 
   handleError(error: HttpErrorResponse) {

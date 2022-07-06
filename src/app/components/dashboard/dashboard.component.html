@@ -62,38 +62,56 @@
           Vous pouvez à tout moment modifier les informations de votre animal de
           compagnie
         </p>
-        <form [formGroup]="editForm" (ngSubmit)="submitModification(null)">
-          <div class="table-responsive">
-            <ng-template [ngIf]="user.Owner && pets.length > 0">
-              <table class="table table-striped table-hover table-responsive">
-                <thead>
-                  <tr>
-                    <th scope="col">Nom</th>
-                    <th scope="col">Catégories</th>
-                    <th scope="col">Race</th>
-                    <th scope="col">Date de naissance</th>
-                    <th scope="col">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let pet of pets">
-                    <td *ngIf="!pet.isEdit">{{ pet.nickName }}</td>
-                    <td *ngIf="pet.isEdit">
+        <div class="table-responsive">
+          <ng-template [ngIf]="user.Owner && pets.length > 0">
+            <table class="table table-striped table-hover table-responsive">
+              <thead>
+                <tr>
+                  <th scope="col">Nom</th>
+                  <th scope="col">Catégories</th>
+                  <th scope="col">Race</th>
+                  <th scope="col">Date de naissance</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let pet of pets">
+                  <ng-template [ngIf]="!pet.isEdit">
+                    <td>{{ pet.nickName }}</td>
+                    <td>{{ pet.type }}</td>
+                    <td>{{ pet.breed }}</td>
+                    <td>
+                      {{ pet.birthDate | date: "shortDate" }}
+                    </td>
+                    <td>
+                      <button
+                        class="fa fa-pencil btn"
+                        (click)="editPet(pet)"
+                      ></button>
+                      <button
+                        class="fa fa-trash btn"
+                        (click)="deletePet(pet.nickName, pet.id)"
+                      ></button>
+                    </td>
+                  </ng-template>
+                  <ng-template [ngIf]="pet.isEdit">
+                    <td>
                       <input
-                        formControlName="nickName"
-                        pattern="[a-zA-Z]+[\s|-]?[a-zA-Z]+[\s|-]?[a-zA-Z]+$"
-                        [required]="true"
-                        [ngModel]="pet.nickName"
+                        class="form-control"
                         type="text"
+                        [(ngModel)]="pet.nickName"
+                        pattern="[a-zA-Z]+[\s|-]?[a-zA-Z]+[\s|-]?[a-zA-Z]+$"
+                        required="true"
+                        name="nickName"
                       />
                     </td>
-                    <td *ngIf="!pet.isEdit">{{ pet.type }}</td>
-                    <td *ngIf="pet.isEdit">
+                    <td>
                       <select
                         class="form-select"
                         aria-label="default select example"
-                        formControlName="type"
-                        [required]="true"
+                        required="true"
+                        [(ngModel)]="pet.type"
+                        name="categories"
                       >
                         <option selected ngValue="null" disabled>
                           Choisissez une catégorie.
@@ -106,62 +124,92 @@
                         </option>
                       </select>
                     </td>
-                    <td *ngIf="!pet.isEdit">{{ pet.breed }}</td>
-                    <td *ngIf="pet.isEdit">
+                    <td>
                       <input
-                        class="table"
-                        *ngIf="pet.isEdit"
-                        formControlName="breed"
-                        [ngModel]="pet.breed"
-                        pattern="[a-zA-Z]+[\s|-]?[a-zA-Z]+[\s|-]?[a-zA-Z]+$"
-                        [required]="true"
+                        class="form-control"
                         type="text"
-                      />
-                    </td>
-                    <td *ngIf="!pet.isEdit">
-                      {{ pet.birthDate | date: "longDate" }}
-                    </td>
-                    <td *ngIf="pet.isEdit">
-                      <input
-                        *ngIf="pet.isEdit"
-                        formControlName="birthDate"
-                        [ngModel]="pet.birthDate"
-                        [required]="true"
-                        type="date"
-                        [value]="pet.birthDate"
+                        [(ngModel)]="pet.breed"
+                        pattern="[a-zA-Z]+[\s|-]?[a-zA-Z]+[\s|-]?[a-zA-Z]+$"
+                        required="true"
                       />
                     </td>
                     <td>
-                      <button
-                        class="fa fa-pencil btn"
-                        aria-hidden="true"
-                        (click)="editPet(pet)"
-                        *ngIf="!pet.isEdit"
-                        [disabled]="!editForm.valid"
-                      ></button
-                      ><button
-                        *ngIf="!pet.isEdit"
-                        [disabled]="!editForm.valid"
-                        class="fa fa-trash btn"
-                        aria-hidden="true"
-                        (click)="deletePet(pet.nickName, pet.id)"
-                      ></button>
-
-                      <button
-                        class="fa fa-check btn"
-                        *ngIf="pet.isEdit == true"
-                        [disabled]="!editForm.valid"
-                        (click)="editPet(pet)"
-                        aria-hidden="true"
-                      ></button>
+                      <input
+                        class="form-control"
+                        type="date"
+                        [(ngModel)]="pet.birthDate"
+                        required="true"
+                        name="birthDate"
+                      />
                     </td>
-                  </tr>
-                </tbody>
-              </table>
-            </ng-template>
-          </div>
-        </form>
+                    <button
+                      class="fa fa-check btn"
+                      (click)="savePet(pet)"
+                    ></button>
+                    <button class="fa fa-ban btn" (click)="cancel(pet)"></button
+                  ></ng-template>
+                </tr>
+              </tbody>
+            </table>
+          </ng-template>
+        </div>
       </div>
+      <!-- <form [formGroup]="editForm" (ngSubmit)="submitModification(null)"> -->
+      <!-- <td *ngIf="!pet.isEdit">{{ pet.nickName }}</td> -->
+      <!-- <td *ngIf="pet.isEdit">
+                    <input
+                      formControlName="nickName"
+                      pattern="[a-zA-Z]+[\s|-]?[a-zA-Z]+[\s|-]?[a-zA-Z]+$"
+                      [required]="true"
+                      [ngModel]="pet.nickName"
+                      type="text"
+                    />
+                  </td> -->
+      <!-- <td *ngIf="!pet.isEdit">{{ pet.type }}</td> -->
+      <!-- <td *ngIf="pet.isEdit">
+                    <select
+                      class="form-select"
+                      aria-label="default select example"
+                      formControlName="type"
+                      [required]="true"
+                    >
+                      <option selected ngValue="null" disabled>
+                        Choisissez une catégorie.
+                      </option>
+                      <option
+                        *ngFor="let categorie of categories"
+                        [value]="categorie"
+                      >
+                        {{ categorie }}
+                      </option>
+                    </select>
+                  </td> -->
+      <!-- <td *ngIf="!pet.isEdit">{{ pet.breed }}</td>
+                  <td *ngIf="pet.isEdit">
+                    <input
+                      class="table"
+                      *ngIf="pet.isEdit"
+                      formControlName="breed"
+                      [ngModel]="pet.breed"
+                      pattern="[a-zA-Z]+[\s|-]?[a-zA-Z]+[\s|-]?[a-zA-Z]+$"
+                      [required]="true"
+                      type="text"
+                    />
+                  </td> -->
+      <!-- <td *ngIf="!pet.isEdit">
+                    {{ pet.birthDate | date: "longDate" }}
+                  </td>
+                  <td *ngIf="pet.isEdit">
+                    <input
+                      *ngIf="pet.isEdit"
+                      formControlName="birthDate"
+                      [ngModel]="pet.birthDate"
+                      [required]="true"
+                      type="date"
+                      [value]="pet.birthDate"
+                    />
+                  </td> -->
+      <!-- </form> -->
     </div>
     <div class="col">
       <div class="card" style="width: 18rem">
