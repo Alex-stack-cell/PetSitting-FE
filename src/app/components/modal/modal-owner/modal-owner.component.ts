@@ -83,8 +83,8 @@ export class ModalOwnerComponent implements OnInit {
       next: () => {
         setTimeout(() => this.showSuccessAlert(), 3000);
       },
-      error: () => {
-        this.errorAlertBox();
+      error: (err: any | null) => {
+        this.errorAlertBox(err);
       },
     });
     this.ownerForm.reset();
@@ -104,7 +104,11 @@ export class ModalOwnerComponent implements OnInit {
     Swal.fire('Wouhou', 'Vous êtes enregistré 🥳', 'success');
   }
 
-  errorAlertBox() {
-    Swal.fire('Oops', 'Une erreur est survenue 💥', 'error');
+  errorAlertBox(err: any | null) {
+    Swal.fire(
+      'Oops',
+      'Une erreur est survenue 💥. <br>' + err['error'],
+      'error'
+    );
   }
 }

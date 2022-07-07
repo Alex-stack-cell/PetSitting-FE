@@ -31,10 +31,11 @@ export class PasswordComponent implements OnInit {
 
   SubmitForm() {
     if (this.passwordForm.valid) {
+      console.log('Test');
       let tkn = JSON.parse(localStorage.getItem('auth_meta'));
-      console.log(this.passwordForm.value);
       Object.assign(this.passwordToUpdate, this.passwordForm.value);
       this.passwordToUpdate.id = tkn['Id'];
+
       if (tkn['Owner']) {
         this._ownerService.updatePasswd(this.passwordToUpdate).subscribe({
           next: () => {
@@ -45,8 +46,18 @@ export class PasswordComponent implements OnInit {
             this.errorAlertBox();
           },
         });
-      } else {
-        // petSitter
+      } else if (tkn['Owner'] == false) {
+        console.log('test');
+
+        this._petSitterService.updatePasswd(this.passwordToUpdate).subscribe({
+          next: () => {
+            this.showSuccessAlert();
+            this._router.navigateByUrl('/dashboard');
+          },
+          error: () => {
+            this.errorAlertBox();
+          },
+        });
       }
     }
   }
@@ -64,7 +75,11 @@ export class PasswordComponent implements OnInit {
   }
 
   showSuccessAlert(): void {
-    Swal.fire('Bravo', 'Votre mot de passe a bien été modifié', 'success');
+    Swal.fire(
+      'Bravo',
+      'Votre mot de passe a bien été modifié. Veuillez regarder votre boite mail ou vos spams',
+      'success'
+    );
   }
 
   errorAlertBox() {

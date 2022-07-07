@@ -76,7 +76,11 @@ export class PetSitterComponent implements OnInit {
   }
 
   showSuccessAlert(): void {
-    Swal.fire('Bravo', 'Vous avez bien modifié votre compte  🥳', 'success');
+    Swal.fire(
+      'Bravo',
+      'Vous avez bien modifié votre compte  🥳. Veuillez regarder dans votre boite mail ou spam',
+      'success'
+    );
   }
 
   errorAlertBox() {

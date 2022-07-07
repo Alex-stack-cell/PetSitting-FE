@@ -88,8 +88,8 @@ export class ModalPetSitterComponent implements OnInit {
       next: () => {
         setTimeout(() => this.showSuccessAlert(), 3000);
       },
-      error: () => {
-        this.errorAlertBox();
+      error: (err: any | null) => {
+        this.errorAlertBox(err);
       },
     });
     this.petSitterForm.reset();
@@ -109,7 +109,11 @@ export class ModalPetSitterComponent implements OnInit {
     Swal.fire('Wouhou', 'Vous êtes enregistré 🥳', 'success');
   }
 
-  errorAlertBox() {
-    Swal.fire('Oops', 'Une erreur est survenue 💥', 'error');
+  errorAlertBox(err: any | null) {
+    Swal.fire(
+      'Oops',
+      'Une erreur est survenue 💥. <br>' + err['error'],
+      'error'
+    );
   }
 }

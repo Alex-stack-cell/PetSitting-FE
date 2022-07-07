@@ -73,7 +73,11 @@ export class OwnerComponent implements OnInit {
   }
 
   showSuccessAlert(): void {
-    Swal.fire('Bravo', 'Vous avez bien modifié votre compte  🥳', 'success');
+    Swal.fire(
+      'Bravo',
+      'Vous avez bien modifié votre compte  🥳. Veuillez regarder votre boite mail ou vos spams',
+      'success'
+    );
   }
 
   errorAlertBox() {
