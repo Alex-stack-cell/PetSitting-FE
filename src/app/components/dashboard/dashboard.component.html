@@ -35,6 +35,8 @@
           <a routerLink="/edit/password">Modifier votre mot de passe ?</a>
         </li>
       </ul>
+      <h3>Actions</h3>
+      <p>Vous pouvez à tout moment modifier votre compte ci-dessous:</p>
       <a
         *ngIf="user.Owner == true"
         class="btn btn-primary"
@@ -53,8 +55,7 @@
         *ngIf="user.Owner == true"
         class="btn btn-success m-2"
         routerLink="/edit/owner/addAnimal"
-        ><i class="fa fa-plus-circle" aria-hidden="true"></i> Ajouter un
-        animal</a
+        ><i class="fa fa-plus-circle" aria-hidden="true"></i> Ajouter un pet</a
       >
       <div *ngIf="user.Owner == true && pets.length > 0">
         <h3>Mes pets</h3>
@@ -153,63 +154,17 @@
             </table>
           </ng-template>
         </div>
+        <h3>Mes annonces</h3>
+        <p>C'est bien calme ici. Vous souhaitez créer une annonce ?</p>
+        <a routerLink="/">Ajouter une annonce</a>
       </div>
-      <!-- <form [formGroup]="editForm" (ngSubmit)="submitModification(null)"> -->
-      <!-- <td *ngIf="!pet.isEdit">{{ pet.nickName }}</td> -->
-      <!-- <td *ngIf="pet.isEdit">
-                    <input
-                      formControlName="nickName"
-                      pattern="[a-zA-Z]+[\s|-]?[a-zA-Z]+[\s|-]?[a-zA-Z]+$"
-                      [required]="true"
-                      [ngModel]="pet.nickName"
-                      type="text"
-                    />
-                  </td> -->
-      <!-- <td *ngIf="!pet.isEdit">{{ pet.type }}</td> -->
-      <!-- <td *ngIf="pet.isEdit">
-                    <select
-                      class="form-select"
-                      aria-label="default select example"
-                      formControlName="type"
-                      [required]="true"
-                    >
-                      <option selected ngValue="null" disabled>
-                        Choisissez une catégorie.
-                      </option>
-                      <option
-                        *ngFor="let categorie of categories"
-                        [value]="categorie"
-                      >
-                        {{ categorie }}
-                      </option>
-                    </select>
-                  </td> -->
-      <!-- <td *ngIf="!pet.isEdit">{{ pet.breed }}</td>
-                  <td *ngIf="pet.isEdit">
-                    <input
-                      class="table"
-                      *ngIf="pet.isEdit"
-                      formControlName="breed"
-                      [ngModel]="pet.breed"
-                      pattern="[a-zA-Z]+[\s|-]?[a-zA-Z]+[\s|-]?[a-zA-Z]+$"
-                      [required]="true"
-                      type="text"
-                    />
-                  </td> -->
-      <!-- <td *ngIf="!pet.isEdit">
-                    {{ pet.birthDate | date: "longDate" }}
-                  </td>
-                  <td *ngIf="pet.isEdit">
-                    <input
-                      *ngIf="pet.isEdit"
-                      formControlName="birthDate"
-                      [ngModel]="pet.birthDate"
-                      [required]="true"
-                      type="date"
-                      [value]="pet.birthDate"
-                    />
-                  </td> -->
-      <!-- </form> -->
+      <div *ngIf="!user.Owner">
+        <h3 class="mt-2">Mes prestations</h3>
+        <p>
+          Vous n'avez aucune prestation pour le moment. Intéresser pour faire du
+          pet-sitting ? <a routerLink="/">Trouver un pet-sitting</a>
+        </p>
+      </div>
     </div>
     <div class="col">
       <div class="card" style="width: 18rem">

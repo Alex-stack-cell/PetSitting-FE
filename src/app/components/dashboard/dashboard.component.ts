@@ -87,7 +87,6 @@ export class DashboardComponent implements OnInit {
           next: () => {
             this.showSuccessAlert();
             this.ngOnInit();
-            // window.location.reload();
           },
         });
       }
@@ -96,6 +95,7 @@ export class DashboardComponent implements OnInit {
 
   cancel(pet: Pet): boolean {
     pet.isEdit = false;
+    this.ngOnInit();
     return pet.isEdit;
   }
 

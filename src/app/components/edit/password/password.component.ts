@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 export class PasswordComponent implements OnInit {
   passwordToUpdate: PasswdUpdated = new PasswdUpdated();
   passwordForm: FormGroup;
+  isPasswordValid: boolean = false;
   passwordMatch: boolean = false;
   auth_meta_obj: Object = JSON.parse(localStorage.getItem('auth_meta'));
   constructor(
@@ -60,6 +61,18 @@ export class PasswordComponent implements OnInit {
         });
       }
     }
+  }
+
+  validatePassword(): boolean {
+    if (
+      this.passwordForm.value['currentPassword'] !=
+      this.passwordForm.value['newPassword']
+    ) {
+      this.isPasswordValid = true;
+    } else {
+      this.isPasswordValid = false;
+    }
+    return this.isPasswordValid;
   }
 
   confirmPassword(): boolean {
